@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ShowPlanXML xmlns="http://schemas.microsoft.com/sqlserver/2004/07/showplan" Version="1.571" Build="16.0.1000.6">
+  <BatchSequence>
+    <Batch>
+      <Statements>
+        <StmtSimple StatementText="SELECT 1" StatementId="1" StatementCompId="1" StatementType="SELECT"
+          StatementSubTreeCost="1.157E-06" StatementEstRows="1" CardinalityEstimationModelVersion="160"/>
+      </Statements>
+    </Batch>
+  </BatchSequence>
+</ShowPlanXML>

@@ -1,0 +1,251 @@
+= Binding Status
+:toc:
+
+Binding status of each namespace listed on https://schemas.microsoft.com/sqlserver/[Microsoft SQL Server XML Schemas]
+(index page dated April 2014).
+Namespaces are relative to `http://schemas.microsoft.com/sqlserver/`.
+
+Schemas are not redistributable (Microsoft copyright, no license grant), so none is committed or packaged;
+`mvn -N antrun:run@download-schemas` downloads them into the root `schemas/` (git-ignored) and verifies their SHA-256 (listed in `schemas/schemas.sha256`).
+The 2005/2008/2010 RDL schemas could be redistributed under the [MS-RDL] Open Specifications notice, but use the same mechanism for consistency.
+
+== Naming
+
+Each module is named after the `targetNamespace` of its schema (as written in the schema, which may differ from the index page):
+
+[horizontal]
+token:: `b` + the first 4 lowercase hex characters of SHA-256 of the exact `targetNamespace` (UTF-8, no trailing
+newline) + `e`, e.g. `ba1b3e` for `http://schemas.microsoft.com/sqlserver/2004/07/showplan`
+module directory / artifactId:: `sqlserver-xml-schema-binding-` + token
+package / `Automatic-Module-Name`:: `io.github.jinahya.sqlserver.xml.schema.binding.` + token
+
+----
+printf '%s' "http://schemas.microsoft.com/sqlserver/2004/07/showplan" | shasum -a 256 | cut -c1-4
+----
+
+== Legend
+
+[horizontal]
+`done`:: module exists, sources generate, and round-trip tests pass
+`wip`:: module exists, sources generate and a `JAXBContext` loads, but no sample-document round-trip test yet
+`todo`:: not started
+`skip`:: deliberately not bound (reason in *Notes*); applies to every namespace whose schema defines no `targetNamespace`
+(or whose schema cannot be retrieved)
+
+== Status
+
+[cols="4,3,1,1,1,3",options="header"]
+|===
+| Namespace | Description | Module (= artifactId) | Schema version | Status | Notes
+
+6+h| 2004/07 -- AdventureWorks sample schemas
+
+| `2004/07/adventure-works/ContactInfo`
+| AdventureWorks Customer Contact Information
+| `sqlserver-xml-schema-binding-b7fdbe` |  | `wip` |
+
+| `2004/07/adventure-works/ContactRecord`
+| AdventureWorks Customer Contact Record
+| `sqlserver-xml-schema-binding-b80e2e` |  | `wip` |
+
+| `2004/07/adventure-works/ContactTypes`
+| AdventureWorks Customer Contact Type
+| `sqlserver-xml-schema-binding-b2e7ae` |  | `wip` |
+
+| `2004/07/adventure-works/IndividualSurvey`
+| AdventureWorks Consumer Demographics Survey
+| `sqlserver-xml-schema-binding-b9c1be` |  | `wip` |
+
+| `2004/07/adventure-works/ProductModelDescription`
+| AdventureWorks Product Catalog
+| `sqlserver-xml-schema-binding-b0fd0e` |  | `done`
+| Imports `ProductModelWarrAndMain` (resolved via `src/main/catalog/catalog.xml`, not generated); the `Warranty` and `Maintenance` references in the mixed `Features` type are bound as DOM elements, which can be unmarshalled with the `sqlserver-xml-schema-binding-b4347e` module. Reusing that module via its episode fails with an XJC NPE on `@XmlElementRef` in mixed content.
+
+| `2004/07/adventure-works/ProductModelManuInstructions`
+| AdventureWorks Manufacturing Instructions Document
+| | | `skip`
+| Served file (`ProductModelManuInstructions.xsd`) is all zero bytes (3626 bytes, checked over HTTP and HTTPS); `targetNamespace` cannot be determined.
+
+| `2004/07/adventure-works/ProductModelWarrAndMain`
+| AdventureWorks Product Warranty and Maintenance Information
+| `sqlserver-xml-schema-binding-b4347e` |  | `wip` |
+
+| `2004/07/adventure-works/Resume`
+| AdventureWorks Standard Resume
+| `sqlserver-xml-schema-binding-b3da3e` |  | `wip` |
+
+| `2004/07/adventure-works/StoreSurvey`
+| AdventureWorks Retail Stores Demographics Survey
+| `sqlserver-xml-schema-binding-b95f5e` |  | `wip` |
+
+6+h| 2004 -- Database Engine
+
+| `2004/07/dta`
+| Database Engine Tuning Advisor
+| `sqlserver-xml-schema-binding-b89eee` | `1.1` | `wip` |
+
+| `2004/07/queryprocessor`
+| Memory Grant
+| `sqlserver-xml-schema-binding-b61cee` | `1.0` | `wip` |
+
+| `2004/07/showplan`
+| Showplan
+| `sqlserver-xml-schema-binding-ba1b3e` | `sql2022` (1.571) | `done`
+| `ConvertType` has both an element and an attribute named `Style`; the attribute is bound to `styleAttribute`.
+Tested with a single trivial `SELECT 1` plan only.
+
+| `2004/10/semanticmodeling`
+| Semantic Modeling
+|  |  | `skip`
+| Imports `http://schemas.microsoft.com/analysisservices/2003/engine` from `DataSourceView.xsd`, which returns HTTP 404.
+
+| `2004/bulkload/format`
+| Bulk Load Format
+| `sqlserver-xml-schema-binding-bc42fe` |  | `wip` |
+
+| `2004/sqltypes`
+| SQL Server to XSD Type Mapping
+| `sqlserver-xml-schema-binding-bdd36e` | `1.2` | `wip` |
+
+6+h| 2004 -- SOAP (native XML web services)
+
+| `2004/SOAP/Options`
+| SQL SOAP Options
+| `sqlserver-xml-schema-binding-bf91ee` |  | `wip` |
+
+| `2004/SOAP/types`
+| SQL SOAP Types
+| | | `skip`
+| Served file (`SqlSoapTypes.xsd`) is all zero bytes (2354 bytes, checked over HTTP and HTTPS); `targetNamespace` cannot be determined.
+
+| `2004/SOAP/types/SqlMessage`
+| SQL SOAP Types SqlMessage
+| `sqlserver-xml-schema-binding-b8bc1e` |  | `wip` |
+
+| `2004/SOAP/types/SqlParameter`
+| SQL SOAP Types SqlParameter
+| `sqlserver-xml-schema-binding-b2898e` |  | `wip`
+| Imports `2004/sqltypes`; resolved via `src/main/catalog/catalog.xml` and reuses the `sqlserver-xml-schema-binding-bdd36e` module through its episode.
+
+| `2004/SOAP/types/SqlResultStream`
+| SQL SOAP Types SqlResultStream
+|  |  | `skip`
+| Imports `2004/SOAP/types` and `2004/SOAP/types/SqlTransaction`, whose schemas are served as all zero bytes.
+
+| `2004/SOAP/types/SqlRowCount`
+| SQL SOAP Types SqlRowCount
+| `sqlserver-xml-schema-binding-b3f54e` |  | `wip` |
+
+| `2004/SOAP/types/SqlTransaction`
+| SQL SOAP Types SqlTransaction
+| | | `skip`
+| Served file (`SqlTransaction.xsd`) is all zero bytes (2430 bytes, checked over HTTP and HTTPS); `targetNamespace` cannot be determined.
+
+6+h| 2006 -- 2012
+
+| `2006/11/eventdata`
+| SQL Server Event Data
+| | | `skip`
+| No `targetNamespace` in `events.xsd` (nor in `sql2008/events.xsd`).
+
+| `2008/07/extendedeventconfig`
+| SQL Server Extended Events Configuration
+| `sqlserver-xml-schema-binding-b1232e` | `1.0` | `wip`
+| Actual `targetNamespace` is `http://schemas.microsoft.com/sqlserver/2008/07/extendedeventsconfig` (note `events`).
+
+| `2008/07/IntegrationServices/DataTypeMapping`
+| SQL Server Import and Export Wizard Data Type Mapping
+| `sqlserver-xml-schema-binding-b1464e` |  | `wip`
+| Actual `targetNamespace` is `http://www.microsoft.com/SqlServer/Dts/DataTypeMapping.xsd`.
+
+| `2008/07/IntegrationServices/DtwTypeConversion`
+| SQL Server Import and Export Wizard Data Type Conversion
+| `sqlserver-xml-schema-binding-b8e89e` |  | `wip`
+| Actual `targetNamespace` is `http://www.microsoft.com/SqlServer/Dts/DtwTypeConversion.xsd`.
+
+| `2008/07/IntegrationServices/Extensions`
+| Identifier Mappings for Integration Services Extensions
+| | | `skip`
+| Served file (`Extensions.xsd`) is all zero bytes (3004 bytes, checked over HTTP and HTTPS); `targetNamespace` cannot be determined.
+
+| `2008/07/IntegrationServices/UpgradeMapping`
+| Upgrade Mapping for Integration Services Custom Components
+| | | `skip`
+| Served file (`UpgradeMapping.xsd`) is all zero bytes (2362 bytes, checked over HTTP and HTTPS); `targetNamespace` cannot be determined.
+
+| `2008/10/servicebroker/externalactivator`
+| SQL Server Service Broker External Activator Configuration File
+| `sqlserver-xml-schema-binding-b2707e` | `1.0` | `wip` |
+
+| `2008/DataDebugger/`
+| Integration Services Data Profile
+| `sqlserver-xml-schema-binding-bd290e` |  | `wip` |
+
+| `2011/geography`
+| SQL Server GEOGRAPHY Type Extension
+| `sqlserver-xml-schema-binding-b2a48e` | `1.0` | `wip` |
+
+| `2012/upgradeadvisor/upgraderules`
+| SQL Server Upgrade Advisor's Rules Repository
+| | | `skip`
+| No `targetNamespace` in `BpaRepository.xsd`.
+
+6+h| Data-tier applications (DAC / DacFx)
+
+| `dac/DeployReport/2012/02`
+| SQL Server DacFx Deploy Report
+| `sqlserver-xml-schema-binding-b13d6e` |  | `wip` |
+
+| `dac/DriftReport/2012/02`
+| SQL Server DacFx Drift Report
+| `sqlserver-xml-schema-binding-baccbe` |  | `wip` |
+
+| `dac/Serialization/2012/02`
+| SQL Server DacFx Serialization
+| `sqlserver-xml-schema-binding-b669ce` |  | `wip`
+| `PropertyType` has both an element and an attribute named `Value`; the attribute is bound to `valueAttribute`.
+
+| `ManagementModel/Serialization/2009/08`
+| Data-Tier Application (DAC) Management Model for SQL Server 2008 R2
+|  |  | `skip`
+| Imports `RelationalEngine/Serialization/2009/08`, whose schema returns HTTP 404.
+
+| `RelationalEngine/Serialization/2009/08`
+| Data-Tier Application (DAC) Relational Model for SQL Server 2008 R2
+| | | `skip`
+| `RelationalEngine.xsd` returns HTTP 404; `targetNamespace` cannot be determined.
+
+6+h| Spatial
+
+| `profiles/gml`
+| SQL Server's profile of the GML Schema
+| `sqlserver-xml-schema-binding-bfdede` | `3.1.1` | `wip`
+| Bound with `underscoreBinding="asCharInWord"` since e.g. `_Ring` and `Ring` collide.
+
+6+h| Reporting Services (RDL)
+
+| `reporting/2005/01/reportdefinition`
+| Report Definition Language (RDL) 2005
+| `sqlserver-xml-schema-binding-be1d1e` |  | `wip` |
+
+| `reporting/2008/01/reportdefinition`
+| Report Definition Language (RDL) 2008
+| `sqlserver-xml-schema-binding-b2a2ce` |  | `wip`
+| `ChartAnnotationType` is an empty (`TODO`) choice which XJC cannot name; bound to `java.lang.Object`.
+
+| `reporting/2010/01/reportdefinition`
+| Report Definition Language (RDL) 2010
+| `sqlserver-xml-schema-binding-b9cace` |  | `wip` |
+|===
+
+== Summary
+
+[cols="1,1",options="header"]
+|===
+| Status | Count
+| `done` | 2
+| `wip`  | 28
+| `todo` | 0
+| `skip` | 11
+| *Total* | *41*
+|===

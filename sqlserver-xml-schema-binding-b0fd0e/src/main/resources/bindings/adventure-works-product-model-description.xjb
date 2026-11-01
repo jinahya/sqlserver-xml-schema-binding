@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  version="3.0">
+
+  <!-- Warranty and Maintenance of ProductModelWarrAndMain (resolved via src/main/catalog/catalog.xml), referenced
+       from the mixed Features type, are bound as DOM elements; XJC fails (NPE) on @XmlElementRef, in mixed content, to
+       a class of another module, and generating a copy would duplicate the classes of
+       sqlserver-xml-schema-binding-b4347e -->
+  <jaxb:bindings
+    schemaLocation="../../../../../schemas/sqlserver/2004/07/adventure-works/ProductModelDescription/ProductModelDescription.xsd"
+    node="/xsd:schema/xsd:complexType[@name='Features']/xsd:sequence">
+    <jaxb:bindings node="xsd:element[@ref='wm:Warranty']"
+      xmlns:wm="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ProductModelWarrAndMain">
+      <jaxb:dom/>
+    </jaxb:bindings>
+    <jaxb:bindings node="xsd:element[@ref='wm:Maintenance']"
+      xmlns:wm="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ProductModelWarrAndMain">
+      <jaxb:dom/>
+    </jaxb:bindings>
+  </jaxb:bindings>
+  <jaxb:bindings scd="x-schema::wm"
+    xmlns:wm="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ProductModelWarrAndMain">
+    <jaxb:schemaBindings map="false"/>
+  </jaxb:bindings>
+
+</jaxb:bindings>

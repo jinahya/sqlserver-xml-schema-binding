@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ProductDescription xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ProductModelDescription"
+  xmlns:wm="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ProductModelWarrAndMain"
+  ProductModelID="19" ProductModelName="Mountain 100">
+  <Features>These are the product highlights.
+    <wm:Warranty>
+      <wm:WarrantyPeriod>3 years</wm:WarrantyPeriod>
+      <wm:Description>parts and labor</wm:Description>
+    </wm:Warranty>
+    <wm:Maintenance>
+      <wm:NoOfYears>10 years</wm:NoOfYears>
+      <wm:Description>maintenance contract available through your dealer or any AdventureWorks retail store.
+      </wm:Description>
+    </wm:Maintenance>
+  </Features>
+</ProductDescription>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  version="3.0">
+
+  <jaxb:bindings schemaLocation="../../../../../schemas/sqlserver/2004/07/showplan/sql2022/showplanxml.xsd"
+    node="/xsd:schema">
+    <!-- ConvertType has both an element and an attribute named "Style" -->
+    <jaxb:bindings node="xsd:complexType[@name='ConvertType']/xsd:attribute[@name='Style']">
+      <jaxb:property name="StyleAttribute"/>
+    </jaxb:bindings>
+  </jaxb:bindings>
+
+</jaxb:bindings>

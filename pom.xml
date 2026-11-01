@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
+  child.project.url.inherit.append.path="false">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.jinahya</groupId>
+    <artifactId>jinahya-parent</artifactId>
+    <version>1.1.1</version>
+  </parent>
+
+  <groupId>io.github.jinahya</groupId>
+  <artifactId>sqlserver-xml-schema-binding</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>${project.artifactId}</name>
+  <description>Jakarta XML Binding for the Microsoft SQL Server XML Schemas</description>
+  <url>https://github.com/jinahya/sqlserver-xml-schema-binding</url>
+  <inceptionYear>2026</inceptionYear>
+
+  <modules>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ContactInfo -->
+    <module>sqlserver-xml-schema-binding-b7fdbe</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ContactRecord -->
+    <module>sqlserver-xml-schema-binding-b80e2e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ContactTypes -->
+    <module>sqlserver-xml-schema-binding-b2e7ae</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/IndividualSurvey -->
+    <module>sqlserver-xml-schema-binding-b9c1be</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ProductModelDescription -->
+    <module>sqlserver-xml-schema-binding-b0fd0e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ProductModelWarrAndMain -->
+    <module>sqlserver-xml-schema-binding-b4347e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/Resume -->
+    <module>sqlserver-xml-schema-binding-b3da3e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey -->
+    <module>sqlserver-xml-schema-binding-b95f5e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/07/dta -->
+    <module>sqlserver-xml-schema-binding-b89eee</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/07/queryprocessor -->
+    <module>sqlserver-xml-schema-binding-b61cee</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/07/showplan -->
+    <module>sqlserver-xml-schema-binding-ba1b3e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/SOAP/Options -->
+    <module>sqlserver-xml-schema-binding-bf91ee</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/SOAP/types/SqlMessage -->
+    <module>sqlserver-xml-schema-binding-b8bc1e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/SOAP/types/SqlParameter -->
+    <module>sqlserver-xml-schema-binding-b2898e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/SOAP/types/SqlRowCount -->
+    <module>sqlserver-xml-schema-binding-b3f54e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/bulkload/format -->
+    <module>sqlserver-xml-schema-binding-bc42fe</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/sqltypes -->
+    <module>sqlserver-xml-schema-binding-bdd36e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2008/07/extendedeventsconfig -->
+    <module>sqlserver-xml-schema-binding-b1232e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2008/10/servicebroker/externalactivator -->
+    <module>sqlserver-xml-schema-binding-b2707e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2008/DataDebugger/ -->
+    <module>sqlserver-xml-schema-binding-bd290e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2011/geography -->
+    <module>sqlserver-xml-schema-binding-b2a48e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/dac/DeployReport/2012/02 -->
+    <module>sqlserver-xml-schema-binding-b13d6e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/dac/DriftReport/2012/02 -->
+    <module>sqlserver-xml-schema-binding-baccbe</module>
+    <!-- http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02 -->
+    <module>sqlserver-xml-schema-binding-b669ce</module>
+    <!-- http://schemas.microsoft.com/sqlserver/reporting/2005/01/reportdefinition -->
+    <module>sqlserver-xml-schema-binding-be1d1e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition -->
+    <module>sqlserver-xml-schema-binding-b2a2ce</module>
+    <!-- http://schemas.microsoft.com/sqlserver/reporting/2010/01/reportdefinition -->
+    <module>sqlserver-xml-schema-binding-b9cace</module>
+    <!-- http://www.microsoft.com/SqlServer/Dts/DataTypeMapping.xsd -->
+    <module>sqlserver-xml-schema-binding-b1464e</module>
+    <!-- http://www.microsoft.com/SqlServer/Dts/DtwTypeConversion.xsd -->
+    <module>sqlserver-xml-schema-binding-b8e89e</module>
+    <!-- http://www.opengis.net/gml -->
+    <module>sqlserver-xml-schema-binding-bfdede</module>
+  </modules>
+
+  <!-- modules link to the repository itself, not to a non-existent <url>/<artifactId> -->
+  <scm child.scm.connection.inherit.append.path="false"
+    child.scm.developerConnection.inherit.append.path="false"
+    child.scm.url.inherit.append.path="false">
+    <connection>scm:git:git@github.com:jinahya/sqlserver-xml-schema-binding.git</connection>
+    <developerConnection>scm:git:git@github.com:jinahya/sqlserver-xml-schema-binding.git</developerConnection>
+    <url>https://github.com/jinahya/sqlserver-xml-schema-binding</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <properties>
+    <maven.compiler.release>17</maven.compiler.release>
+    <!-- https://central.sonatype.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api/versions -->
+    <version.jakarta.xml.bind-api>4.0.5</version.jakarta.xml.bind-api>
+    <!-- https://central.sonatype.com/artifact/org.glassfish.jaxb/jaxb-runtime/versions -->
+    <version.org.glassfish.jaxb>4.0.9</version.org.glassfish.jaxb>
+    <!-- https://central.sonatype.com/artifact/org.jvnet.jaxb/jaxb-maven-plugin/versions -->
+    <version.jaxb-maven-plugin>4.0.16</version.jaxb-maven-plugin>
+    <!-- https://central.sonatype.com/artifact/org.junit/junit-bom/versions -->
+    <version.org.junit>6.1.3</version.org.junit>
+    <!-- where schemas are downloaded (git-ignored, but the schemas/schemas.sha256 index); modules are direct children of the root -->
+    <schemas.directory>${project.basedir}/../schemas</schemas.directory>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>jakarta.xml.bind</groupId>
+        <artifactId>jakarta.xml.bind-api</artifactId>
+        <version>${version.jakarta.xml.bind-api}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.jaxb</groupId>
+        <artifactId>jaxb-runtime</artifactId>
+        <version>${version.org.glassfish.jaxb}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${version.org.junit}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin><!-- schemas are not redistributable, so they are never committed (only the schemas/schemas.sha256 index
+               is) nor downloaded by the build; 'mvn -N antrun:run@download-schemas' downloads them (see below), and each
+               module checks that its schemas/{schema.path} is listed in the index and there -->
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>3.2.0</version>
+          <executions>
+            <execution>
+              <id>check-schema</id>
+              <phase>initialize</phase>
+              <goals>
+                <goal>run</goal>
+              </goals>
+              <configuration>
+                <target>
+                  <fail message="${schema.path} is not listed in schemas/schemas.sha256">
+                    <condition>
+                      <not>
+                        <resourcecontains resource="${schemas.directory}/schemas.sha256" substring="  ${schema.path}"/>
+                      </not>
+                    </condition>
+                  </fail>
+                  <fail
+                    message="${schemas.directory}/${schema.path} not found; run 'mvn -N antrun:run@download-schemas' first">
+                    <condition>
+                      <not>
+                        <available file="${schemas.directory}/${schema.path}"/>
+                      </not>
+                    </condition>
+                  </fail>
+                </target>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.16.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.6.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.5.1</version>
+          <configuration>
+            <archive>
+              <manifestEntries>
+                <!-- each module defines module.name -->
+                <Automatic-Module-Name>${module.name}</Automatic-Module-Name>
+              </manifestEntries>
+            </archive>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.jvnet.jaxb</groupId>
+          <artifactId>jaxb-maven-plugin</artifactId>
+          <version>${version.jaxb-maven-plugin}</version>
+          <executions>
+            <execution>
+              <id>generate</id>
+              <goals>
+                <goal>generate</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <!-- downloaded by maven-antrun-plugin; only the module's own schema, not the others there -->
+            <schemaDirectory>${schemas.directory}</schemaDirectory>
+            <schemaIncludes>
+              <include>${schema.path}</include>
+            </schemaIncludes>
+            <bindingDirectory>${project.basedir}/src/main/resources/bindings</bindingDirectory>
+            <bindingIncludes>
+              <include>**/*.xjb</include>
+            </bindingIncludes>
+            <strict>false</strict>
+            <extension>true</extension>
+            <noFileHeader>true</noFileHeader>
+            <!-- each module defines module.name -->
+            <generatePackage>${module.name}</generatePackage>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin><!-- mvn -N antrun:run@download-schemas
+             downloads https://schemas.microsoft.com/{path} to schemas/{path} for each "sha256  path" line of
+             schemas/schemas.sha256 (shasum format), unless already there, and verifies that each is byte-for-byte the
+             expected file; run manually, never as part of the build -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <inherited>false</inherited>
+        <executions>
+          <execution>
+            <!-- for modules only -->
+            <id>check-schema</id>
+            <phase>none</phase>
+          </execution>
+          <execution>
+            <id>download-schemas</id>
+            <phase>none</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <!-- Ant has no loop: turn each "sha256  path" line of schemas/schemas.sha256 into a <schema/> call of a
+                     generated build file, and run it -->
+                <concat destfile="${project.build.directory}/download-schemas.xml">
+                  <header filtering="no" trimleading="yes"><![CDATA[
+                    <project name="download-schemas" default="download">
+                      <macrodef name="schema">
+                        <attribute name="path"/>
+                        <attribute name="sha256"/>
+                        <sequential>
+                          <local name="dir"/>
+                          <local name="ok"/>
+                          <dirname property="dir" file="${schemas}/@{path}"/>
+                          <mkdir dir="${dir}"/>
+                          <get src="https://schemas.microsoft.com/@{path}" dest="${schemas}/@{path}" skipexisting="true"/>
+                          <checksum file="${schemas}/@{path}" algorithm="SHA-256" property="@{sha256}" verifyproperty="ok"/>
+                          <fail message="unexpected SHA-256 of schemas/@{path}">
+                            <condition>
+                              <isfalse value="${ok}"/>
+                            </condition>
+                          </fail>
+                        </sequential>
+                      </macrodef>
+                      <target name="download">
+                  ]]></header>
+                  <fileset file="${project.basedir}/schemas/schemas.sha256"/>
+                  <filterchain>
+                    <linecontainsregexp>
+                      <regexp pattern="^[0-9a-f]{64}  \S+$"/>
+                    </linecontainsregexp>
+                    <replaceregex pattern="^([0-9a-f]{64})  (\S+)$"
+                      replace="&lt;schema sha256=&quot;\1&quot; path=&quot;\2&quot;/&gt;"/>
+                  </filterchain>
+                  <footer filtering="no"><![CDATA[
+                      </target>
+                    </project>
+                  ]]></footer>
+                </concat>
+                <ant antfile="${project.build.directory}/download-schemas.xml" inheritall="false">
+                  <property name="schemas" location="${project.basedir}/schemas"/>
+                </ant>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

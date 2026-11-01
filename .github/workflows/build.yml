@@ -1,0 +1,57 @@
+name: build
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [ 17, 21, 25 ]
+    name: build (Java ${{ matrix.java }})
+    steps:
+      - uses: actions/checkout@v5
+
+      # schemas are not redistributable; only the schemas/schemas.sha256 index may be committed
+      - name: Check no schema is committed
+        run: |
+          if git ls-files | grep -i '\.xsd$'; then
+            echo "::error::.xsd files must not be committed"
+            exit 1
+          fi
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+          cache: maven
+
+      # kept in the (private) Actions cache, not in the repository, to spare schemas.microsoft.com
+      - name: Cache schemas
+        uses: actions/cache@v4
+        with:
+          path: |
+            schemas/**/*.xsd
+          key: schemas-${{ hashFiles('schemas/schemas.sha256') }}
+
+      # downloads what's missing, and verifies every file against schemas/schemas.sha256
+      - name: Download schemas
+        run: mvn -B -N antrun:run@download-schemas
+
+      - name: Build
+        run: mvn -B verify
+
+      - name: Check no schema is packaged
+        run: |
+          if for j in */target/*.jar; do unzip -l "$j"; done | grep -i '\.xsd$'; then
+            echo "::error::.xsd files must not be packaged"
+            exit 1
+          fi

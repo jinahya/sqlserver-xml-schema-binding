@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- resolves the schemaLocation-less import of http://schemas.microsoft.com/sqlserver/2004/sqltypes -->
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <public publicId="http://schemas.microsoft.com/sqlserver/2004/sqltypes"
+    uri="../../../../schemas/sqlserver/2004/sqltypes/SqlTypes.xsd"/>
+</catalog>

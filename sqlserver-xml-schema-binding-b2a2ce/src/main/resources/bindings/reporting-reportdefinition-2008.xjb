@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  version="3.0">
+
+  <jaxb:bindings
+    schemaLocation="../../../../../schemas/sqlserver/reporting/2008/01/reportdefinition/ReportDefinition.xsd"
+    node="/xsd:schema">
+    <!-- ChartAnnotationType consists of an empty (TODO) choice which XJC cannot name; bind it as xs:anyType -->
+    <jaxb:bindings node="xsd:complexType[@name='ChartAnnotationType']">
+      <jaxb:class ref="java.lang.Object"/>
+    </jaxb:bindings>
+  </jaxb:bindings>
+
+</jaxb:bindings>

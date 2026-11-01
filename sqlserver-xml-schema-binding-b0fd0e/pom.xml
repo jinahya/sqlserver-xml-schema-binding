@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.jinahya</groupId>
+    <artifactId>sqlserver-xml-schema-binding</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>sqlserver-xml-schema-binding-b0fd0e</artifactId>
+
+  <name>${project.artifactId}</name>
+  <description>Jakarta XML Binding for
+    http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ProductModelDescription
+  </description>
+
+  <properties>
+    <!-- the package of generated classes, and the Automatic-Module-Name -->
+    <module.name>io.github.jinahya.sqlserver.xml.schema.binding.b0fd0e</module.name>
+    <!-- downloaded by 'mvn -N antrun:run@download-schemas' (see the root pom.xml) -->
+    <schema.path>sqlserver/2004/07/adventure-works/ProductModelDescription/ProductModelDescription.xsd</schema.path>
+  </properties>
+
+  <dependencies>
+    <!-- for unmarshalling the Warranty/Maintenance DOM elements of Features in tests -->
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>sqlserver-xml-schema-binding-b4347e</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.jvnet.jaxb</groupId>
+        <artifactId>jaxb-maven-plugin</artifactId>
+        <configuration>
+          <catalog>${project.basedir}/src/main/catalog/catalog.xml</catalog>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
