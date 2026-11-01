@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -121,6 +122,12 @@ class EventInstancesTest {
     assertEquals(eventType, eventInstance.getEventType());
     assertNotNull(eventInstance.getPostTime());
     assertTrue(eventInstance.getSPID() > 0);
+
+    // value equals/hashCode; EVENT_INSTANCE is untyped, so ValueEqualityTest can't unmarshal these
+    final var again = EventInstances.unmarshal(document);
+    assertNotSame(eventInstance, again);
+    assertEquals(eventInstance, again);
+    assertEquals(eventInstance.hashCode(), again.hashCode());
 
     // written as EVENTDATA() does: EVENT_INSTANCE in no namespace, without xsi:type
     final var xml = marshal(eventInstance);

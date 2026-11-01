@@ -44,6 +44,11 @@ printf '%s' "http://schemas.microsoft.com/sqlserver/2004/07/showplan" | shasum -
 - Each module sets `schema.path` in its `pom.xml` and declares `maven-antrun-plugin`, whose inherited `check-schema`
   execution (`initialize`) fails if `schema.path` isn't listed in the index or `schemas/{schema.path}` is missing. XJC
   reads only that file; tests needing the `.xsd` read `../schemas/...` (see `ShowPlanXMLTest`), not the classpath.
+- Every generated class has value `equals`/`hashCode` (`jaxb-plugins` `-Xequals`/`-XhashCode`, root `pom.xml`; runtime
+  dependency `jaxb-plugins-runtime`), through `ValueEqualsStrategy`/`ValueHashCodeStrategy`, which add DOM nodes
+  (`isEqualNode`) to the JAXB strategies. They and `ValueEqualityTest` are written once in the root `src/templates/`
+  and generated into each module's package (`generate-templates`, `@module.name@` replaced; not a shared module, so
+  no split packages). `ValueEqualityTest` also unmarshals every `src/test/resources/**/*.xml` twice.
 - Binding customizations (`*.xjb`) go under `src/main/resources/bindings/` (only when needed), with
   `schemaLocation="../../../../../schemas/{schema.path}"`.
 - A schema importing another namespace without `schemaLocation`: resolve it with `src/main/catalog/catalog.xml`
