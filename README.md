@@ -1,5 +1,7 @@
 # sqlserver-xml-schema-binding
 
+[![build](https://github.com/jinahya/sqlserver-xml-schema-binding/actions/workflows/build.yml/badge.svg?branch=develop)](https://github.com/jinahya/sqlserver-xml-schema-binding/actions/workflows/build.yml)
+
 [Jakarta XML Binding](https://jakarta.ee/specifications/xml-binding/) classes for the
 [Microsoft SQL Server XML Schemas](https://schemas.microsoft.com/sqlserver/).
 
