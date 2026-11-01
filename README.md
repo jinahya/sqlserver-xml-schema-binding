@@ -1,7 +1,9 @@
 # sqlserver-xml-schema-binding
 
 [![build](https://github.com/jinahya/sqlserver-xml-schema-binding/actions/workflows/build.yml/badge.svg?branch=develop)](https://github.com/jinahya/sqlserver-xml-schema-binding/actions/workflows/build.yml)
+
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.jinahya/sqlserver-xml-schema-binding)](https://central.sonatype.com/artifact/io.github.jinahya/sqlserver-xml-schema-binding)
+[![javadoc](https://javadoc.io/badge2/io.github.jinahya/sqlserver-xml-schema-binding-ba1b3e/javadoc.svg)](https://javadoc.io/doc/io.github.jinahya/sqlserver-xml-schema-binding-ba1b3e)
 
 [Jakarta XML Binding](https://jakarta.ee/specifications/xml-binding/) classes for the
 [Microsoft SQL Server XML Schemas](https://schemas.microsoft.com/sqlserver/).
