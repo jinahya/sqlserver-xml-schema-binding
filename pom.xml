@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
-  child.project.url.inherit.append.path="false">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" child.project.url.inherit.append.path="false">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -12,7 +10,7 @@
 
   <groupId>io.github.jinahya</groupId>
   <artifactId>sqlserver-xml-schema-binding</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <packaging>pom</packaging>
 
   <name>${project.artifactId}</name>
@@ -88,13 +86,11 @@
   </modules>
 
   <!-- modules link to the repository itself, not to a non-existent <url>/<artifactId> -->
-  <scm child.scm.connection.inherit.append.path="false"
-    child.scm.developerConnection.inherit.append.path="false"
-    child.scm.url.inherit.append.path="false">
+  <scm child.scm.connection.inherit.append.path="false" child.scm.developerConnection.inherit.append.path="false" child.scm.url.inherit.append.path="false">
     <connection>scm:git:git@github.com:jinahya/sqlserver-xml-schema-binding.git</connection>
     <developerConnection>scm:git:git@github.com:jinahya/sqlserver-xml-schema-binding.git</developerConnection>
     <url>https://github.com/jinahya/sqlserver-xml-schema-binding</url>
-    <tag>HEAD</tag>
+    <tag>0.0.1</tag>
   </scm>
 
   <properties>
@@ -170,15 +166,14 @@
                   <fail message="${schema.path} is not listed in schemas/schemas.sha256">
                     <condition>
                       <not>
-                        <resourcecontains resource="${schemas.directory}/schemas.sha256" substring=" ${schema.path}"/>
+                        <resourcecontains resource="${schemas.directory}/schemas.sha256" substring=" ${schema.path}" />
                       </not>
                     </condition>
                   </fail>
-                  <fail
-                    message="${schemas.directory}/${schema.path} not found; run 'mvn -N antrun:run@download-schemas' first">
+                  <fail message="${schemas.directory}/${schema.path} not found; run 'mvn -N antrun:run@download-schemas' first">
                     <condition>
                       <not>
-                        <available file="${schemas.directory}/${schema.path}"/>
+                        <available file="${schemas.directory}/${schema.path}" />
                       </not>
                     </condition>
                   </fail>
@@ -287,13 +282,12 @@
                       </macrodef>
                       <target name="download">
                   ]]></header>
-                  <fileset file="${project.basedir}/schemas/schemas.sha256"/>
+                  <fileset file="${project.basedir}/schemas/schemas.sha256" />
                   <filterchain>
                     <linecontainsregexp>
-                      <regexp pattern="^[0-9a-f]{64}\s+\S+$"/>
+                      <regexp pattern="^[0-9a-f]{64}\s+\S+$" />
                     </linecontainsregexp>
-                    <replaceregex pattern="^([0-9a-f]{64})\s+(\S+)$"
-                      replace="&lt;schema sha256=&quot;\1&quot; path=&quot;\2&quot;/&gt;"/>
+                    <replaceregex pattern="^([0-9a-f]{64})\s+(\S+)$" replace="&lt;schema sha256=&quot;\1&quot; path=&quot;\2&quot;/&gt;" />
                   </filterchain>
                   <footer filtering="no"><![CDATA[
                       </target>
@@ -301,7 +295,7 @@
                   ]]></footer>
                 </concat>
                 <ant antfile="${project.build.directory}/download-schemas.xml" inheritall="false">
-                  <property name="schemas" location="${project.basedir}/schemas"/>
+                  <property name="schemas" location="${project.basedir}/schemas" />
                 </ant>
               </target>
             </configuration>
