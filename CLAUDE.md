@@ -101,6 +101,10 @@ printf '%s' "http://schemas.microsoft.com/sqlserver/2004/07/showplan" | shasum -
   scopes server credentials by `<repositoryOrigins>`, which breaks deploying to Nexus. No `maven-wrapper-plugin` in the
   POMs; to change the version, edit `distributionUrl` and `distributionSha256Sum` (SHA-256 of the `-bin.zip`, checked
   against Apache's published `.sha512`). `.gitattributes` keeps `mvnw` LF and `mvnw.cmd` CRLF.
+- Release: plain `./mvnw release:prepare release:perform`. `release:perform` builds a fresh checkout of the tag
+  (`target/checkout`), which has no schemas, so the root `pom.xml` sets `<releaseProfiles>download-schemas</releaseProfiles>`
+  (other release settings come from `jinahya-parent`); that profile binds `download-schemas` to the root's
+  `initialize`. `./mvnw -Pdownload-schemas verify` does the same in one command.
 - `.mvn/maven.config` holds default CLI options (`--threads=1C`; one argument per line). Parallel builds are safe
   because the build only reads `schemas/`; only `download-schemas` writes there.
 - CI: `.github/workflows/build.yml` (Java 17/21/25) runs the same two commands, caching `schemas/**/*.xsd` in the

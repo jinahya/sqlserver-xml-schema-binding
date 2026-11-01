@@ -245,7 +245,7 @@
       <plugin><!-- mvn -N antrun:run@download-schemas
              downloads https://schemas.microsoft.com/{path} to schemas/{path} for each "sha256  path" line of
              schemas/schemas.sha256 (shasum format), unless already there, and verifies that each is byte-for-byte the
-             expected file; run manually, never as part of the build -->
+             expected file; run manually, or with -Pdownload-schemas (see the profile below), as release:perform does -->
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-antrun-plugin</artifactId>
         <inherited>false</inherited>
@@ -308,6 +308,38 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <!-- release:perform builds a fresh checkout of the tag, which has no (git-ignored) schemas; the profile
+             downloads them there. Other settings, and the version, come from jinahya-parent -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <configuration>
+          <releaseProfiles>download-schemas</releaseProfiles>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <!-- binds download-schemas to the root's initialize, before any module checks its schema; e.g.
+           ./mvnw -Pdownload-schemas verify, and release:perform (releaseProfiles) -->
+      <id>download-schemas</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <inherited>false</inherited>
+            <executions>
+              <execution>
+                <id>download-schemas</id>
+                <phase>initialize</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
