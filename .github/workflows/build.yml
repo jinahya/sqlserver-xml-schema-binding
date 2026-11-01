@@ -44,10 +44,10 @@ jobs:
 
       # downloads what's missing, and verifies every file against schemas/schemas.sha256
       - name: Download schemas
-        run: mvn -B -N antrun:run@download-schemas
+        run: ./mvnw -B -N antrun:run@download-schemas
 
       - name: Build
-        run: mvn -B verify
+        run: ./mvnw -B verify
 
       - name: Check no schema is packaged
         run: |

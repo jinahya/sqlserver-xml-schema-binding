@@ -33,7 +33,7 @@ printf '%s' "http://schemas.microsoft.com/sqlserver/2004/07/showplan" | shasum -
   `pom.xml` turns it into the package (`jaxb-maven-plugin` `generatePackage`) and the `Automatic-Module-Name`
   (`maven-jar-plugin`). Don't set packages in `.xjb` files.
 - Schemas are Microsoft's copyrighted files with no redistribution grant: **never commit them or package them in a
-  jar.** They are downloaded **manually**, never by the build: `mvn -N antrun:run@download-schemas` (root `pom.xml`,
+  jar.** They are downloaded **manually**, never by the build: `./mvnw -N antrun:run@download-schemas` (root `pom.xml`,
   `<inherited>false</inherited>`, `<phase>none</phase>`) downloads `https://schemas.microsoft.com/{path}` to the root
   `schemas/{path}` (`*.xsd` git-ignored), skipping existing files, and fails on a SHA-256 mismatch. What to download
   is the committed index `schemas/schemas.sha256` (`shasum` format, `{sha256}  {path}`, two spaces; the single source
@@ -94,8 +94,13 @@ printf '%s' "http://schemas.microsoft.com/sqlserver/2004/07/showplan" | shasum -
 
 ## Build
 
-- `mvn -B -N antrun:run@download-schemas` once (schemas), then `mvn -B clean verify` builds and tests all modules;
-  generated sources land in `target/generated-sources/xjc/`.
+- `./mvnw -B -N antrun:run@download-schemas` once (schemas), then `./mvnw -B clean verify` builds and tests all
+  modules; generated sources land in `target/generated-sources/xjc/`.
+- Use the Maven Wrapper (`mvnw`, `mvnw.cmd`, `.mvn/wrapper/maven-wrapper.properties`): script-only (no
+  `maven-wrapper.jar`), pinned to Maven 3.9.16 and verified by `distributionSha256Sum`. Stay on 3.9.x: Maven 3.10
+  scopes server credentials by `<repositoryOrigins>`, which breaks deploying to Nexus. No `maven-wrapper-plugin` in the
+  POMs; to change the version, edit `distributionUrl` and `distributionSha256Sum` (SHA-256 of the `-bin.zip`, checked
+  against Apache's published `.sha512`). `.gitattributes` keeps `mvnw` LF and `mvnw.cmd` CRLF.
 - `.mvn/maven.config` holds default CLI options (`--threads=1C`; one argument per line). Parallel builds are safe
   because the build only reads `schemas/`; only `download-schemas` writes there.
 - CI: `.github/workflows/build.yml` (Java 17/21/25) runs the same two commands, caching `schemas/**/*.xsd` in the

@@ -64,6 +64,6 @@ The XML schemas are © Microsoft Corporation and are not included in this reposi
 building:
 
 ```sh
-mvn -N antrun:run@download-schemas
-mvn verify
+./mvnw -N antrun:run@download-schemas
+./mvnw verify
 ```
