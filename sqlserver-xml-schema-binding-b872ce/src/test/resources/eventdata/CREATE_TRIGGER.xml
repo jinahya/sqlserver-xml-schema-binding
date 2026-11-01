@@ -1,0 +1,26 @@
+<EVENT_INSTANCE><EventType>CREATE_TRIGGER</EventType><PostTime>2025-11-14T13:01:22.007</PostTime><SPID>57</SPID><ServerName>SERVER</ServerName><LoginName>DOMAIN\user</LoginName><UserName>dbo</UserName><DatabaseName>AdventureWorks</DatabaseName><SchemaName>HumanResources</SchemaName><ObjectName>dEmployee</ObjectName><ObjectType>TRIGGER</ObjectType><TargetObjectName>Employee</TargetObjectName><TargetObjectType>TABLE</TargetObjectType><TSQLCommand><SetOptions ANSI_NULLS="ON" ANSI_NULL_DEFAULT="ON" ANSI_PADDING="ON" QUOTED_IDENTIFIER="ON" ENCRYPTED="FALSE"/><CommandText>&#x0D;
+CREATE TRIGGER [HumanResources].[dEmployee] ON [HumanResources].[Employee]&#x0D;
+INSTEAD OF DELETE NOT FOR REPLICATION AS&#x0D;
+BEGIN&#x0D;
+    DECLARE @Count int;&#x0D;
+&#x0D;
+    SET @Count = @@ROWCOUNT;&#x0D;
+    IF @Count = 0&#x0D;
+        RETURN;&#x0D;
+&#x0D;
+    SET NOCOUNT ON;&#x0D;
+&#x0D;
+    BEGIN&#x0D;
+        RAISERROR&#x0D;
+            (N'Employees cannot be deleted. They can only be marked as not current.', -- Message&#x0D;
+            10, -- Severity.&#x0D;
+            1); -- State.&#x0D;
+&#x0D;
+        -- Rollback any active or uncommittable transactions&#x0D;
+        IF @@TRANCOUNT &gt; 0&#x0D;
+        BEGIN&#x0D;
+            ROLLBACK TRANSACTION;&#x0D;
+        END&#x0D;
+    END;&#x0D;
+END;&#x0D;
+</CommandText></TSQLCommand></EVENT_INSTANCE>

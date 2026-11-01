@@ -1,0 +1,17 @@
+<EVENT_INSTANCE><EventType>ALTER_XML_SCHEMA_COLLECTION</EventType><PostTime>2025-11-14T13:01:07.030</PostTime><SPID>57</SPID><ServerName>SERVER</ServerName><LoginName>DOMAIN\user</LoginName><UserName>dbo</UserName><DatabaseName>AdventureWorks</DatabaseName><SchemaName>Person</SchemaName><ObjectName>AdditionalContactInfoSchemaCollection</ObjectName><ObjectType>XML SCHEMA COLLECTION</ObjectType><TSQLCommand><SetOptions ANSI_NULLS="ON" ANSI_NULL_DEFAULT="ON" ANSI_PADDING="ON" QUOTED_IDENTIFIER="ON" ENCRYPTED="FALSE"/><CommandText>ALTER XML SCHEMA COLLECTION [Person].[AdditionalContactInfoSchemaCollection] ADD&#x0D;
+'&lt;?xml version="1.0" encoding="UTF-8"?&gt;&#x0D;
+&lt;xsd:schema targetNamespace="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ContactRecord"&#x0D;
+    elementFormDefault="qualified"&#x0D;
+    xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ContactRecord"&#x0D;
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" &gt;&#x0D;
+&#x0D;
+    &lt;xsd:element name="ContactRecord" &gt;&#x0D;
+        &lt;xsd:complexType mixed="true" &gt;&#x0D;
+            &lt;xsd:choice minOccurs="0" maxOccurs="unbounded" &gt;&#x0D;
+                &lt;xsd:any processContents="strict" &#x0D;
+                    namespace="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ContactTypes" /&gt;&#x0D;
+            &lt;/xsd:choice&gt;&#x0D;
+            &lt;xsd:attribute name="date" type="xsd:date" /&gt;&#x0D;
+        &lt;/xsd:complexType&gt;&#x0D;
+    &lt;/xsd:element&gt;&#x0D;
+&lt;/xsd:schema&gt;'</CommandText></TSQLCommand></EVENT_INSTANCE>

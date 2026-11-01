@@ -1,0 +1,8 @@
+<EVENT_INSTANCE><EventType>CREATE_FUNCTION</EventType><PostTime>2025-11-14T13:01:22.260</PostTime><SPID>57</SPID><ServerName>SERVER</ServerName><LoginName>DOMAIN\user</LoginName><UserName>dbo</UserName><DatabaseName>AdventureWorks</DatabaseName><SchemaName>dbo</SchemaName><ObjectName>ufnGetAccountingStartDate</ObjectName><ObjectType>FUNCTION</ObjectType><TSQLCommand><SetOptions ANSI_NULLS="ON" ANSI_NULL_DEFAULT="ON" ANSI_PADDING="ON" QUOTED_IDENTIFIER="ON" ENCRYPTED="FALSE"/><CommandText>&#x0D;
+CREATE FUNCTION [dbo].[ufnGetAccountingStartDate]()&#x0D;
+RETURNS [datetime]&#x0D;
+AS&#x0D;
+BEGIN&#x0D;
+    RETURN CONVERT(datetime, '20030701', 112);&#x0D;
+END;&#x0D;
+</CommandText></TSQLCommand></EVENT_INSTANCE>

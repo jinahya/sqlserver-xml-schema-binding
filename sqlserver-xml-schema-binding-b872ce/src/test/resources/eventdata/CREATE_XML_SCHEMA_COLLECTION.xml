@@ -1,0 +1,24 @@
+<EVENT_INSTANCE><EventType>CREATE_XML_SCHEMA_COLLECTION</EventType><PostTime>2025-11-14T13:01:07.090</PostTime><SPID>57</SPID><ServerName>SERVER</ServerName><LoginName>DOMAIN\user</LoginName><UserName>dbo</UserName><DatabaseName>AdventureWorks</DatabaseName><SchemaName>Production</SchemaName><ObjectName>ProductDescriptionSchemaCollection</ObjectName><ObjectType>XML SCHEMA COLLECTION</ObjectType><TSQLCommand><SetOptions ANSI_NULLS="ON" ANSI_NULL_DEFAULT="ON" ANSI_PADDING="ON" QUOTED_IDENTIFIER="ON" ENCRYPTED="FALSE"/><CommandText>CREATE XML SCHEMA COLLECTION [Production].[ProductDescriptionSchemaCollection] AS&#x0D;
+'&lt;xsd:schema targetNamespace="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ProductModelWarrAndMain"&#x0D;
+    xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ProductModelWarrAndMain"&#x0D;
+    elementFormDefault="qualified"&#x0D;
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" &gt;&#x0D;
+ &#x0D;
+    &lt;xsd:element name="Warranty"  &gt;&#x0D;
+        &lt;xsd:complexType&gt;&#x0D;
+            &lt;xsd:sequence&gt;&#x0D;
+                &lt;xsd:element name="WarrantyPeriod" type="xsd:string"  /&gt;&#x0D;
+                &lt;xsd:element name="Description" type="xsd:string"  /&gt;&#x0D;
+            &lt;/xsd:sequence&gt;&#x0D;
+        &lt;/xsd:complexType&gt;&#x0D;
+    &lt;/xsd:element&gt;&#x0D;
+&#x0D;
+    &lt;xsd:element name="Maintenance"  &gt;&#x0D;
+        &lt;xsd:complexType&gt;&#x0D;
+            &lt;xsd:sequence&gt;&#x0D;
+                &lt;xsd:element name="NoOfYears" type="xsd:string"  /&gt;&#x0D;
+                &lt;xsd:element name="Description" type="xsd:string"  /&gt;&#x0D;
+            &lt;/xsd:sequence&gt;&#x0D;
+        &lt;/xsd:complexType&gt;&#x0D;
+    &lt;/xsd:element&gt;&#x0D;
+&lt;/xsd:schema&gt;'</CommandText></TSQLCommand></EVENT_INSTANCE>

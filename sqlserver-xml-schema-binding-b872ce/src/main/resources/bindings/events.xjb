@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:inheritance="urn:jaxb.jvnet.org:plugin:inheritance"
+  jaxb:extensionBindingPrefixes="inheritance"
+  version="3.0">
+
+  <jaxb:bindings schemaLocation="../../../../../schemas/sqlserver/2006/11/eventdata/events.xsd"
+    node="/xsd:schema">
+    <!-- the EVENT_INSTANCE_* types extend no common type, but all begin with EventType, PostTime and SPID -->
+    <jaxb:bindings node="xsd:complexType[starts-with(@name, 'EVENT_INSTANCE_')]" multiple="true">
+      <inheritance:implements>io.github.jinahya.sqlserver.xml.schema.binding.b872ce.EventInstance</inheritance:implements>
+    </jaxb:bindings>
+  </jaxb:bindings>
+
+</jaxb:bindings>

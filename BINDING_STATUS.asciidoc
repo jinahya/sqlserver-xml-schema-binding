@@ -149,7 +149,9 @@ Tested with a single trivial `SELECT 1` plan only.
 | No `targetNamespace` in `events.xsd`, so named after the listed namespace, elements in no namespace (as `EVENTDATA()`
 writes them). `EVENT_INSTANCE` is untyped; `EventInstances` unmarshals it into the class of its `EventType`
 (`EVENT_INSTANCE_<EventType>`) and marshals it without `xsi:type`. Checked against 927 `AdventureWorks`
-`DatabaseLog.XmlEvent` rows (17 event types). Uses the root `events.xsd`, not the older `sql2008/events.xsd`.
+`DatabaseLog.XmlEvent` rows (17 event types; one test fixture each). All 300 `EVENT_INSTANCE_*` classes implement
+`EventInstance` (`EventType`, `PostTime`, `SPID`) via the `jaxb-plugins` inheritance plugin. Uses the root
+`events.xsd`, not the older `sql2008/events.xsd`.
 
 | `2008/07/extendedeventconfig`
 | SQL Server Extended Events Configuration

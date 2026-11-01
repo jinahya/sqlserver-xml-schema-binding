@@ -1,0 +1,2 @@
+<EVENT_INSTANCE><EventType>CREATE_TYPE</EventType><PostTime>2025-11-14T13:01:06.983</PostTime><SPID>57</SPID><ServerName>SERVER</ServerName><LoginName>DOMAIN\user</LoginName><UserName>dbo</UserName><DatabaseName>AdventureWorks</DatabaseName><SchemaName>dbo</SchemaName><ObjectName>Flag</ObjectName><ObjectType>TYPE</ObjectType><TSQLCommand><SetOptions ANSI_NULLS="ON" ANSI_NULL_DEFAULT="ON" ANSI_PADDING="ON" QUOTED_IDENTIFIER="ON" ENCRYPTED="FALSE"/><CommandText>CREATE TYPE [Flag] FROM bit NOT NULL;&#x0D;
+</CommandText></TSQLCommand></EVENT_INSTANCE>

@@ -1,0 +1,3 @@
+<EVENT_INSTANCE><EventType>CREATE_SCHEMA</EventType><PostTime>2025-11-14T13:01:07.013</PostTime><SPID>57</SPID><ServerName>SERVER</ServerName><LoginName>DOMAIN\user</LoginName><UserName>dbo</UserName><DatabaseName>AdventureWorks</DatabaseName><SchemaName>Sales</SchemaName><ObjectName>Sales</ObjectName><ObjectType>SCHEMA</ObjectType><OwnerName>dbo</OwnerName><TSQLCommand><SetOptions ANSI_NULLS="ON" ANSI_NULL_DEFAULT="ON" ANSI_PADDING="ON" QUOTED_IDENTIFIER="ON" ENCRYPTED="FALSE"/><CommandText>&#x0D;
+CREATE SCHEMA [Sales] AUTHORIZATION [dbo];&#x0D;
+</CommandText></TSQLCommand></EVENT_INSTANCE>

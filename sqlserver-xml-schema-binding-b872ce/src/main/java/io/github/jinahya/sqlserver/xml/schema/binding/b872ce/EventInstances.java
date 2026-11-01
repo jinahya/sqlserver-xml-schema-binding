@@ -24,8 +24,18 @@ import org.w3c.dom.Node;
  *
  * <p>The schema declares {@code EVENT_INSTANCE} without a type, and the documents carry no {@code xsi:type}; the type
  * of their content, {@code EVENT_INSTANCE_<EventType>}, is named by their {@code EventType} child. So
- * {@link #unmarshal(Node)} picks the class from {@code EventType}, and {@link #marshal(Object, Result)} writes
+ * {@link #unmarshal(Node)} picks the class from {@code EventType}, and {@link #marshal(EventInstance, Result)} writes
  * {@code EVENT_INSTANCE} without an {@code xsi:type}, as {@code EVENTDATA()} does.
+ *
+ * <p>A marshaller of a {@code JAXBContext} of the {@link ObjectFactory} knows the untyped {@code EVENT_INSTANCE}
+ * element, so it writes an {@code xsi:type}. To marshal with your own settings (e.g.
+ * {@link jakarta.xml.bind.Marshaller#JAXB_FRAGMENT}, to omit the XML declaration), use a marshaller of
+ * {@link #context(Class)} with {@link #element(EventInstance)}:
+ * <pre>{@code
+ * var marshaller = EventInstances.context(eventInstance.getClass()).createMarshaller();
+ * marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+ * marshaller.marshal(EventInstances.element(eventInstance), result);
+ * }</pre>
  */
 public final class EventInstances {
 
@@ -37,15 +47,15 @@ public final class EventInstances {
   private static final String TYPE_NAME_PREFIX = "EVENT_INSTANCE_";
 
   // EventType (e.g. CREATE_TABLE) -> the class bound to the EVENT_INSTANCE_<EventType> type
-  private static final Map<String, Class<?>> TYPES;
+  private static final Map<String, Class<? extends EventInstance>> TYPES;
 
   static {
-    final var types = new HashMap<String, Class<?>>();
+    final var types = new HashMap<String, Class<? extends EventInstance>>();
     for (final var method : ObjectFactory.class.getMethods()) {
       final var type = method.getReturnType();
       final var xmlType = type.getAnnotation(XmlType.class);
       if (xmlType != null && xmlType.name().startsWith(TYPE_NAME_PREFIX)) {
-        types.put(xmlType.name().substring(TYPE_NAME_PREFIX.length()), type);
+        types.put(xmlType.name().substring(TYPE_NAME_PREFIX.length()), type.asSubclass(EventInstance.class));
       }
     }
     TYPES = Map.copyOf(types);
@@ -54,7 +64,16 @@ public final class EventInstances {
   // a context of the type only, which doesn't know the (untyped) EVENT_INSTANCE element, so writes no xsi:type
   private static final Map<Class<?>, JAXBContext> CONTEXTS = new ConcurrentHashMap<>();
 
-  private static JAXBContext context(final Class<?> type) throws JAXBException {
+  /**
+   * Returns a context of {@code type} only, whose marshallers write {@link #element(EventInstance)} without an
+   * {@code xsi:type}, unlike a context of the {@link ObjectFactory}.
+   *
+   * @param type a class returned by {@link #typeOf(String)}.
+   * @return the context, cached per type.
+   * @throws JAXBException if failed to create the context.
+   */
+  public static JAXBContext context(final Class<? extends EventInstance> type) throws JAXBException {
+    Objects.requireNonNull(type, "type is null");
     var context = CONTEXTS.get(type);
     if (context == null) {
       context = JAXBContext.newInstance(type);
@@ -70,7 +89,7 @@ public final class EventInstances {
    * @return the class, e.g. {@link EVENTINSTANCECREATETABLE}.
    * @throws IllegalArgumentException if the schema has no type for {@code eventType}.
    */
-  public static Class<?> typeOf(final String eventType) {
+  public static Class<? extends EventInstance> typeOf(final String eventType) {
     final var type = TYPES.get(Objects.requireNonNull(eventType, "eventType is null"));
     if (type == null) {
       throw new IllegalArgumentException("no type for event type: " + eventType);
@@ -100,9 +119,10 @@ public final class EventInstances {
    *
    * @param eventInstance the {@code EVENT_INSTANCE} element, or a document of it.
    * @return an instance of {@link #typeOf(String) typeOf(eventTypeOf(eventInstance))}.
+   * @throws IllegalArgumentException if the schema has no type for its {@code EventType}.
    * @throws JAXBException if failed to unmarshal.
    */
-  public static Object unmarshal(final Node eventInstance) throws JAXBException {
+  public static EventInstance unmarshal(final Node eventInstance) throws JAXBException {
     final var element = element(eventInstance);
     final var type = typeOf(eventTypeOf(element));
     return context(type).createUnmarshaller().unmarshal(element, type).getValue();
@@ -113,30 +133,41 @@ public final class EventInstances {
    *
    * @param eventInstance a source of the {@code EVENT_INSTANCE} document.
    * @return an instance of the class of its {@code EventType}.
+   * @throws IllegalArgumentException if the schema has no type for its {@code EventType}.
    * @throws JAXBException if failed to unmarshal.
    * @throws TransformerException if failed to read {@code eventInstance}.
    * @see #unmarshal(Node)
    */
-  public static Object unmarshal(final Source eventInstance) throws JAXBException, TransformerException {
+  public static EventInstance unmarshal(final Source eventInstance) throws JAXBException, TransformerException {
     final var result = new DOMResult();
     TransformerFactory.newInstance().newTransformer().transform(eventInstance, result);
     return unmarshal(result.getNode());
   }
 
   /**
-   * Marshals an event instance as {@code EVENT_INSTANCE}, without an {@code xsi:type}.
+   * Returns an event instance as an {@code EVENT_INSTANCE} element, for a marshaller of {@link #context(Class)}.
+   *
+   * @param eventInstance an instance of a class returned by {@link #typeOf(String)}.
+   * @param <T> the type of {@code eventInstance}.
+   * @return the element.
+   */
+  @SuppressWarnings("unchecked")
+  public static <T extends EventInstance> JAXBElement<T> element(final T eventInstance) {
+    final var type = (Class<T>) Objects.requireNonNull(eventInstance, "eventInstance is null").getClass();
+    return new JAXBElement<>(NAME, type, eventInstance);
+  }
+
+  /**
+   * Marshals an event instance as {@code EVENT_INSTANCE}, without an {@code xsi:type}, with the default settings of a
+   * marshaller (so with an XML declaration); see the class documentation for your own settings.
    *
    * @param eventInstance an instance of a class returned by {@link #typeOf(String)}.
    * @param result the result to write to.
    * @throws JAXBException if failed to marshal.
    */
-  public static void marshal(final Object eventInstance, final Result result) throws JAXBException {
-    final var type = Objects.requireNonNull(eventInstance, "eventInstance is null").getClass();
-    context(type).createMarshaller().marshal(element(type, eventInstance), result);
-  }
-
-  private static <T> JAXBElement<T> element(final Class<T> type, final Object value) {
-    return new JAXBElement<>(NAME, type, type.cast(value));
+  public static void marshal(final EventInstance eventInstance, final Result result) throws JAXBException {
+    final var element = element(eventInstance);
+    context(element.getDeclaredType()).createMarshaller().marshal(element, result);
   }
 
   private static Element element(final Node eventInstance) {

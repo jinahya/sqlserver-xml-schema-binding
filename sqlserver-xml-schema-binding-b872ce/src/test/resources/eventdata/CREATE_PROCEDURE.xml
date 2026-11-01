@@ -1,0 +1,25 @@
+<EVENT_INSTANCE><EventType>CREATE_PROCEDURE</EventType><PostTime>2025-11-14T13:01:22.327</PostTime><SPID>57</SPID><ServerName>SERVER</ServerName><LoginName>DOMAIN\user</LoginName><UserName>dbo</UserName><DatabaseName>AdventureWorks</DatabaseName><SchemaName>HumanResources</SchemaName><ObjectName>uspUpdateEmployeePersonalInfo</ObjectName><ObjectType>PROCEDURE</ObjectType><TSQLCommand><SetOptions ANSI_NULLS="ON" ANSI_NULL_DEFAULT="ON" ANSI_PADDING="ON" QUOTED_IDENTIFIER="ON" ENCRYPTED="FALSE"/><CommandText>&#x0D;
+CREATE PROCEDURE [HumanResources].[uspUpdateEmployeePersonalInfo]&#x0D;
+    @BusinessEntityID [int],&#x0D;
+    @NationalIDNumber [nvarchar](15),&#x0D;
+    @BirthDate [datetime],&#x0D;
+    @MaritalStatus [nchar](1),&#x0D;
+    @Gender [nchar](1)&#x0D;
+WITH EXECUTE AS CALLER&#x0D;
+AS&#x0D;
+BEGIN&#x0D;
+    SET NOCOUNT ON;&#x0D;
+&#x0D;
+    BEGIN TRY&#x0D;
+        UPDATE [HumanResources].[Employee]&#x0D;
+        SET [NationalIDNumber] = @NationalIDNumber&#x0D;
+            ,[BirthDate] = @BirthDate&#x0D;
+            ,[MaritalStatus] = @MaritalStatus&#x0D;
+            ,[Gender] = @Gender&#x0D;
+        WHERE [BusinessEntityID] = @BusinessEntityID;&#x0D;
+    END TRY&#x0D;
+    BEGIN CATCH&#x0D;
+        EXECUTE [dbo].[uspLogError];&#x0D;
+    END CATCH;&#x0D;
+END;&#x0D;
+</CommandText></TSQLCommand></EVENT_INSTANCE>

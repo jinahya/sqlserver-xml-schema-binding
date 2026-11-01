@@ -101,6 +101,8 @@
     <version.org.glassfish.jaxb>4.0.9</version.org.glassfish.jaxb>
     <!-- https://central.sonatype.com/artifact/org.jvnet.jaxb/jaxb-maven-plugin/versions -->
     <version.jaxb-maven-plugin>4.0.16</version.jaxb-maven-plugin>
+    <!-- https://central.sonatype.com/artifact/org.jvnet.jaxb/jaxb-plugins/versions (XJC plugins, e.g. -Xinheritance) -->
+    <version.jaxb-plugins>4.0.16</version.jaxb-plugins>
     <!-- https://central.sonatype.com/artifact/org.junit/junit-bom/versions -->
     <version.org.junit>6.1.3</version.org.junit>
     <!-- where schemas are downloaded (git-ignored, but the schemas/schemas.sha256 index); modules are direct children of the root -->

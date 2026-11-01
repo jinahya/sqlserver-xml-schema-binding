@@ -31,6 +31,19 @@
       <plugin>
         <groupId>org.jvnet.jaxb</groupId>
         <artifactId>jaxb-maven-plugin</artifactId>
+        <configuration>
+          <!-- every EVENT_INSTANCE_* class implements EventInstance (see bindings/events.xjb) -->
+          <args>
+            <arg>-Xinheritance</arg>
+          </args>
+          <plugins>
+            <plugin>
+              <groupId>org.jvnet.jaxb</groupId>
+              <artifactId>jaxb-plugins</artifactId>
+              <version>${version.jaxb-plugins}</version>
+            </plugin>
+          </plugins>
+        </configuration>
       </plugin>
     </plugins>
   </build>

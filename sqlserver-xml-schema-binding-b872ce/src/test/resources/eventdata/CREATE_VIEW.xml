@@ -1,0 +1,16 @@
+<EVENT_INSTANCE><EventType>CREATE_VIEW</EventType><PostTime>2025-11-14T13:01:22.217</PostTime><SPID>57</SPID><ServerName>SERVER</ServerName><LoginName>DOMAIN\user</LoginName><UserName>dbo</UserName><DatabaseName>AdventureWorks</DatabaseName><SchemaName>Person</SchemaName><ObjectName>vStateProvinceCountryRegion</ObjectName><ObjectType>VIEW</ObjectType><TSQLCommand><SetOptions ANSI_NULLS="ON" ANSI_NULL_DEFAULT="ON" ANSI_PADDING="ON" QUOTED_IDENTIFIER="ON" ENCRYPTED="FALSE"/><CommandText>&#x0D;
+CREATE VIEW [Person].[vStateProvinceCountryRegion]&#x0D;
+WITH SCHEMABINDING&#x0D;
+AS&#x0D;
+SELECT&#x0D;
+    sp.[StateProvinceID]&#x0D;
+    ,sp.[StateProvinceCode]&#x0D;
+    ,sp.[IsOnlyStateProvinceFlag]&#x0D;
+    ,sp.[Name] AS [StateProvinceName]&#x0D;
+    ,sp.[TerritoryID]&#x0D;
+    ,cr.[CountryRegionCode]&#x0D;
+    ,cr.[Name] AS [CountryRegionName]&#x0D;
+FROM [Person].[StateProvince] sp&#x0D;
+    INNER JOIN [Person].[CountryRegion] cr&#x0D;
+    ON sp.[CountryRegionCode] = cr.[CountryRegionCode];&#x0D;
+</CommandText></TSQLCommand></EVENT_INSTANCE>
