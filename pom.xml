@@ -170,7 +170,7 @@
                   <fail message="${schema.path} is not listed in schemas/schemas.sha256">
                     <condition>
                       <not>
-                        <resourcecontains resource="${schemas.directory}/schemas.sha256" substring="  ${schema.path}"/>
+                        <resourcecontains resource="${schemas.directory}/schemas.sha256" substring=" ${schema.path}"/>
                       </not>
                     </condition>
                   </fail>
@@ -290,9 +290,9 @@
                   <fileset file="${project.basedir}/schemas/schemas.sha256"/>
                   <filterchain>
                     <linecontainsregexp>
-                      <regexp pattern="^[0-9a-f]{64}  \S+$"/>
+                      <regexp pattern="^[0-9a-f]{64}\s+\S+$"/>
                     </linecontainsregexp>
-                    <replaceregex pattern="^([0-9a-f]{64})  (\S+)$"
+                    <replaceregex pattern="^([0-9a-f]{64})\s+(\S+)$"
                       replace="&lt;schema sha256=&quot;\1&quot; path=&quot;\2&quot;/&gt;"/>
                   </filterchain>
                   <footer filtering="no"><![CDATA[
