@@ -33,6 +33,7 @@ printf '%s' "http://schemas.microsoft.com/sqlserver/2004/07/showplan" | shasum -
 | `2004/07/showplan`                                             | Showplan                                                        | `sqlserver-xml-schema-binding-ba1b3e` |
 | `2004/bulkload/format`                                         | Bulk Load Format                                                | `sqlserver-xml-schema-binding-bc42fe` |
 | `2004/sqltypes`                                                | SQL Server to XSD Type Mapping                                  | `sqlserver-xml-schema-binding-bdd36e` |
+| `2006/11/eventdata`\*                                          | SQL Server Event Data (`EVENTDATA()`; see `EventInstances`)     | `sqlserver-xml-schema-binding-b872ce` |
 | `2004/SOAP/Options`                                            | SQL SOAP Options                                                | `sqlserver-xml-schema-binding-bf91ee` |
 | `2004/SOAP/types/SqlMessage`                                   | SQL SOAP Types SqlMessage                                       | `sqlserver-xml-schema-binding-b8bc1e` |
 | `2004/SOAP/types/SqlParameter`                                 | SQL SOAP Types SqlParameter                                     | `sqlserver-xml-schema-binding-b2898e` |
@@ -43,6 +44,7 @@ printf '%s' "http://schemas.microsoft.com/sqlserver/2004/07/showplan" | shasum -
 | `2008/10/servicebroker/externalactivator`                      | SQL Server Service Broker External Activator Configuration File | `sqlserver-xml-schema-binding-b2707e` |
 | `2008/DataDebugger/`                                           | Integration Services Data Profile                               | `sqlserver-xml-schema-binding-bd290e` |
 | `2011/geography`                                               | SQL Server GEOGRAPHY Type Extension                             | `sqlserver-xml-schema-binding-b2a48e` |
+| `2012/upgradeadvisor/upgraderules`\*                           | SQL Server Upgrade Advisor's Rules Repository                   | `sqlserver-xml-schema-binding-b8b91e` |
 | `dac/DeployReport/2012/02`                                     | SQL Server DacFx Deploy Report                                  | `sqlserver-xml-schema-binding-b13d6e` |
 | `dac/DriftReport/2012/02`                                      | SQL Server DacFx Drift Report                                   | `sqlserver-xml-schema-binding-baccbe` |
 | `dac/Serialization/2012/02`                                    | SQL Server DacFx Serialization                                  | `sqlserver-xml-schema-binding-b669ce` |
@@ -50,6 +52,8 @@ printf '%s' "http://schemas.microsoft.com/sqlserver/2004/07/showplan" | shasum -
 | `reporting/2005/01/reportdefinition`                           | Report Definition Language (RDL) 2005                           | `sqlserver-xml-schema-binding-be1d1e` |
 | `reporting/2008/01/reportdefinition`                           | Report Definition Language (RDL) 2008                           | `sqlserver-xml-schema-binding-b2a2ce` |
 | `reporting/2010/01/reportdefinition`                           | Report Definition Language (RDL) 2010                           | `sqlserver-xml-schema-binding-b9cace` |
+
+\* as listed on the index page; the schema has no `targetNamespace`, so its elements are in no namespace.
 
 Generated classes depend only on `jakarta.xml.bind:jakarta.xml.bind-api`; bring your own runtime (e.g.
 `org.glassfish.jaxb:jaxb-runtime`).

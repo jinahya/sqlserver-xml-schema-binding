@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+               version="3.0">
+
+  <!-- a DataSet schema: each table element (e.g. BpaBestpractices) contains its row elements (bpa_bestpractices),
+       which XJC otherwise binds to a nested class of the same name -->
+  <jaxb:globalBindings underscoreBinding="asCharInWord"/>
+
+</jaxb:bindings>

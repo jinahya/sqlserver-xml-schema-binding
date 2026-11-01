@@ -29,8 +29,8 @@ printf '%s' "http://schemas.microsoft.com/sqlserver/2004/07/showplan" | shasum -
 `done`:: module exists, sources generate, and round-trip tests pass
 `wip`:: module exists, sources generate and a `JAXBContext` loads, but no sample-document round-trip test yet
 `todo`:: not started
-`skip`:: deliberately not bound (reason in *Notes*); applies to every namespace whose schema defines no `targetNamespace`
-(or whose schema cannot be retrieved)
+`skip`:: deliberately not bound (reason in *Notes*), e.g. the schema cannot be retrieved; a schema without a
+`targetNamespace` is bound under the namespace listed on the index page
 
 == Status
 
@@ -145,8 +145,11 @@ Tested with a single trivial `SELECT 1` plan only.
 
 | `2006/11/eventdata`
 | SQL Server Event Data
-| | | `skip`
-| No `targetNamespace` in `events.xsd` (nor in `sql2008/events.xsd`).
+| `sqlserver-xml-schema-binding-b872ce` | `1.1` | `done`
+| No `targetNamespace` in `events.xsd`, so named after the listed namespace, elements in no namespace (as `EVENTDATA()`
+writes them). `EVENT_INSTANCE` is untyped; `EventInstances` unmarshals it into the class of its `EventType`
+(`EVENT_INSTANCE_<EventType>`) and marshals it without `xsi:type`. Checked against 927 `AdventureWorks`
+`DatabaseLog.XmlEvent` rows (17 event types). Uses the root `events.xsd`, not the older `sql2008/events.xsd`.
 
 | `2008/07/extendedeventconfig`
 | SQL Server Extended Events Configuration
@@ -187,8 +190,10 @@ Tested with a single trivial `SELECT 1` plan only.
 
 | `2012/upgradeadvisor/upgraderules`
 | SQL Server Upgrade Advisor's Rules Repository
-| | | `skip`
-| No `targetNamespace` in `BpaRepository.xsd`.
+| `sqlserver-xml-schema-binding-b8b91e` | | `wip`
+| No `targetNamespace` in `BpaRepository.xsd`, so named after the listed namespace, elements in no namespace. A .NET
+DataSet schema; `underscoreBinding="asCharInWord"` keeps table (`BpaBestpractices`) and row (`bpa_bestpractices` ->
+`Bpa_Bestpractices`) classes apart. No sample document.
 
 6+h| Data-tier applications (DAC / DacFx)
 

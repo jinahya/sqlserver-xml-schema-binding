@@ -1,0 +1,4 @@
+<EVENT_INSTANCE><EventType>CREATE_TABLE</EventType><PostTime>2025-01-02T03:04:05.678</PostTime><SPID>57</SPID><ServerName>SERVER</ServerName><LoginName>DOMAIN\user</LoginName><UserName>dbo</UserName><DatabaseName>Example</DatabaseName><SchemaName>dbo</SchemaName><ObjectName>Sample</ObjectName><ObjectType>TABLE</ObjectType><TSQLCommand><SetOptions ANSI_NULLS="ON" ANSI_NULL_DEFAULT="ON" ANSI_PADDING="ON" QUOTED_IDENTIFIER="ON" ENCRYPTED="FALSE"/><CommandText>CREATE TABLE [dbo].[Sample](&#x0D;
+    [SampleID] [int] IDENTITY (1, 1) NOT NULL,&#x0D;
+    [Name] [nvarchar](50) NOT NULL&#x0D;
+) ON [PRIMARY]</CommandText></TSQLCommand></EVENT_INSTANCE>

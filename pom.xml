@@ -55,6 +55,8 @@
     <module>sqlserver-xml-schema-binding-bc42fe</module>
     <!-- http://schemas.microsoft.com/sqlserver/2004/sqltypes -->
     <module>sqlserver-xml-schema-binding-bdd36e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2006/11/eventdata (as listed; the schema has no targetNamespace) -->
+    <module>sqlserver-xml-schema-binding-b872ce</module>
     <!-- http://schemas.microsoft.com/sqlserver/2008/07/extendedeventsconfig -->
     <module>sqlserver-xml-schema-binding-b1232e</module>
     <!-- http://schemas.microsoft.com/sqlserver/2008/10/servicebroker/externalactivator -->
@@ -63,6 +65,8 @@
     <module>sqlserver-xml-schema-binding-bd290e</module>
     <!-- http://schemas.microsoft.com/sqlserver/2011/geography -->
     <module>sqlserver-xml-schema-binding-b2a48e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2012/upgradeadvisor/upgraderules (as listed; the schema has no targetNamespace) -->
+    <module>sqlserver-xml-schema-binding-b8b91e</module>
     <!-- http://schemas.microsoft.com/sqlserver/dac/DeployReport/2012/02 -->
     <module>sqlserver-xml-schema-binding-b13d6e</module>
     <!-- http://schemas.microsoft.com/sqlserver/dac/DriftReport/2012/02 -->

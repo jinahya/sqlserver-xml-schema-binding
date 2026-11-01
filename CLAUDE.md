@@ -11,7 +11,9 @@ the table below.
 One module per schema `targetNamespace`. Every name is derived from the namespace; never pick names by hand.
 
 1. Take the `targetNamespace` **exactly as written in the schema** (not as listed on the index page; they differ for
-   some), byte-exact: case and any trailing `/` kept, UTF-8, no trailing newline.
+   some), byte-exact: case and any trailing `/` kept, UTF-8, no trailing newline. Only when the schema has **no**
+   `targetNamespace`, take the namespace as listed in the "XML Schema Namespace" column of the index page instead
+   (`b872ce`, `b8b91e`); the generated classes then bind elements in no namespace, as the schema does.
 2. token = `b` + first 4 lowercase hex characters of its SHA-256 + `e`.
 3. module directory = artifactId = `sqlserver-xml-schema-binding-{token}`.
 4. package = `Automatic-Module-Name` = `io.github.jinahya.sqlserver.xml.schema.binding.{token}`.
@@ -70,6 +72,7 @@ printf '%s' "http://schemas.microsoft.com/sqlserver/2004/07/showplan" | shasum -
 | `http://schemas.microsoft.com/sqlserver/2004/07/showplan`                                | `ba1b3e`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2004/bulkload/format`                            | `bc42fe`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2004/sqltypes`                                   | `bdd36e`                                                                                                 |
+| `http://schemas.microsoft.com/sqlserver/2006/11/eventdata` (as listed)                   | `b872ce`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2004/SOAP/Options`                               | `bf91ee`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2004/SOAP/types/SqlMessage`                      | `b8bc1e`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2004/SOAP/types/SqlParameter`                    | `b2898e`                                                                                                 |
@@ -80,6 +83,7 @@ printf '%s' "http://schemas.microsoft.com/sqlserver/2004/07/showplan" | shasum -
 | `http://schemas.microsoft.com/sqlserver/2008/10/servicebroker/externalactivator`         | `b2707e`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2008/DataDebugger/`                              | `bd290e`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2011/geography`                                  | `b2a48e`                                                                                                 |
+| `http://schemas.microsoft.com/sqlserver/2012/upgradeadvisor/upgraderules` (as listed)    | `b8b91e`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/dac/DeployReport/2012/02`                        | `b13d6e`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/dac/DriftReport/2012/02`                         | `baccbe`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02`                       | `b669ce`                                                                                                 |
@@ -105,13 +109,17 @@ printf '%s' "http://schemas.microsoft.com/sqlserver/2004/07/showplan" | shasum -
 
 - Schemas come from `https://schemas.microsoft.com/sqlserver/...`; they are used byte-for-byte unchanged (the SHA-256
   check enforces it), so fix problems with `.xjb` customizations instead. Some files there are served as all zero bytes,
-  some return 404; those
-  namespaces, and those without a `targetNamespace`, are `skip` (reasons in `BINDING_STATUS.asciidoc`).
+  some return 404; those namespaces are `skip` (reasons in `BINDING_STATUS.asciidoc`). A schema without a
+  `targetNamespace` is not skipped (see the naming rule).
 - XJC fails with an NPE (`CElement.getElementName()` is null) when mixed content references an element whose class
   comes from another module (episode, `<jaxb:class ref>` or `map="false"` alike). Bind those references with
   `<jaxb:dom/>` and the foreign namespace with `<jaxb:schemaBindings map="false"/>` (see `b0fd0e`).
+- An untyped document element whose content type is named by a child (`EVENT_INSTANCE` of `b872ce`, typed by its
+  `EventType`): JAXB can't pick the class, so the module has a hand-written helper (`EventInstances`), which also
+  marshals without `xsi:type` (a context of the `ObjectFactory` knows the untyped element and adds one).
 - Customizations in use: element/attribute name clash -> `<jaxb:property name="...Attribute"/>` (`ba1b3e`, `b669ce`);
-  `_Ring`/`Ring` factory clash -> `underscoreBinding="asCharInWord"` (`bfdede`); empty choice -> `<jaxb:class
+  `_Ring`/`Ring` factory clash, and DataSet table/row classes of the same name -> `underscoreBinding="asCharInWord"`
+  (`bfdede`, `b8b91e`); empty choice -> `<jaxb:class
   ref="java.lang.Object"/>` (`b2a2ce`).
 - `MANIFEST.MF` wraps lines at 72 bytes; unfold continuation lines before checking `Automatic-Module-Name`.
 
