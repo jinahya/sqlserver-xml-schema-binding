@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  version="3.0">
+
+  <!-- the inline xsd:schema of SqlRowSet (declared by the root src/stubs/xml-schema.xml) is bound as a DOM element, and the
+       XML Schema namespace is not mapped -->
+  <jaxb:bindings schemaLocation="../../../../../schemas/sqlserver/2004/SOAP/types/SqlSoapTypes.xsd"
+    node="/xsd:schema/xsd:complexType[@name='SqlRowSet']/xsd:sequence/xsd:element[@ref='xsd:schema']">
+    <jaxb:dom/>
+  </jaxb:bindings>
+  <jaxb:bindings scd="x-schema::xsd">
+    <jaxb:schemaBindings map="false"/>
+  </jaxb:bindings>
+
+</jaxb:bindings>

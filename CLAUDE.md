@@ -37,7 +37,10 @@ printf '%s' "http://schemas.microsoft.com/sqlserver/2004/07/showplan" | shasum -
   `<inherited>false</inherited>`, `<phase>none</phase>`) downloads `https://schemas.microsoft.com/{path}` to the root
   `schemas/{path}` (`*.xsd` git-ignored), skipping existing files, and fails on a SHA-256 mismatch. What to download
   is the committed index `schemas/schemas.sha256` (`shasum` format, `{sha256}  {path}`, two spaces; the single source
-  of the hashes; `cd schemas && shasum -a 256 -c schemas.sha256` checks the files). Plain Ant has no loop, so the
+  of the hashes; `cd schemas && shasum -a 256 -c schemas.sha256` checks the files). A path also listed in the
+  committed `schemas/schemas.wayback` (`{timestamp}  {path}`, for files now served as all zero bytes) is downloaded
+  from that pinned Wayback Machine snapshot (`https://web.archive.org/web/{timestamp}id_/http://schemas.microsoft.com/{path}`)
+  instead, still checked against `schemas.sha256`. Plain Ant has no loop, so the
   execution turns the index into a generated build file (`target/download-schemas.xml`) and runs it; no ant-contrib or
   `<script>`. It runs on the root only (`-N`):
   per-module antrun executions require dependency resolution, which fails before sibling modules are built.
@@ -69,6 +72,7 @@ printf '%s' "http://schemas.microsoft.com/sqlserver/2004/07/showplan" | shasum -
 | `http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ContactTypes`            | `b2e7ae`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/IndividualSurvey`        | `b9c1be`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ProductModelDescription` | `b0fd0e`                                                                                                 |
+| `http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ProductModelManuInstructions` | `b73cae`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ProductModelWarrAndMain` | `b4347e`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/Resume`                  | `b3da3e`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey`             | `b95f5e`                                                                                                 |
@@ -79,12 +83,17 @@ printf '%s' "http://schemas.microsoft.com/sqlserver/2004/07/showplan" | shasum -
 | `http://schemas.microsoft.com/sqlserver/2004/sqltypes`                                   | `bdd36e`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2006/11/eventdata` (as listed)                   | `b872ce`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2004/SOAP/Options`                               | `bf91ee`                                                                                                 |
+| `http://schemas.microsoft.com/sqlserver/2004/SOAP/types`                                 | `bdf87e`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2004/SOAP/types/SqlMessage`                      | `b8bc1e`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2004/SOAP/types/SqlParameter`                    | `b2898e`                                                                                                 |
+| `http://schemas.microsoft.com/sqlserver/2004/SOAP/types/SqlResultStream`                 | `bd5c8e`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2004/SOAP/types/SqlRowCount`                     | `b3f54e`                                                                                                 |
+| `http://schemas.microsoft.com/sqlserver/2004/SOAP/types/SqlTransaction`                  | `bfe22e`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2008/07/extendedeventsconfig`                    | `b1232e`                                                                                                 |
 | `http://www.microsoft.com/SqlServer/Dts/DataTypeMapping.xsd`                             | `b1464e`                                                                                                 |
 | `http://www.microsoft.com/SqlServer/Dts/DtwTypeConversion.xsd`                           | `b8e89e`                                                                                                 |
+| `http://www.microsoft.com/SqlServer/Dts/Extensions.xsd`                                  | `b014de`                                                                                                 |
+| `http://www.microsoft.com/SqlServer/Dts/UpgradeMapping.xsd`                              | `b985de`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2008/10/servicebroker/externalactivator`         | `b2707e`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2008/DataDebugger/`                              | `bd290e`                                                                                                 |
 | `http://schemas.microsoft.com/sqlserver/2011/geography`                                  | `b2a48e`                                                                                                 |
@@ -122,9 +131,16 @@ printf '%s' "http://schemas.microsoft.com/sqlserver/2004/07/showplan" | shasum -
 ## Known pitfalls
 
 - Schemas come from `https://schemas.microsoft.com/sqlserver/...`; they are used byte-for-byte unchanged (the SHA-256
-  check enforces it), so fix problems with `.xjb` customizations instead. Some files there are served as all zero bytes,
-  some return 404; those namespaces are `skip` (reasons in `BINDING_STATUS.asciidoc`). A schema without a
-  `targetNamespace` is not skipped (see the naming rule).
+  check enforces it), so fix problems with `.xjb` customizations instead. Some files there are served as all zero bytes
+  (the original's size); look for a Wayback Machine snapshot of the same size
+  (`https://web.archive.org/cdx/search/cdx?url=schemas.microsoft.com/sqlserver/{path}`) and list it in
+  `schemas/schemas.wayback` (`b73cae`, `bdf87e`, `bfe22e`, `b014de`, `b985de`). Namespaces without any usable file
+  (404, or no snapshot) are `skip` (reasons in `BINDING_STATUS.asciidoc`). A schema without a `targetNamespace` is not
+  skipped (see the naming rule).
+- A schema referencing a component of a namespace it doesn't import (`SqlRowSet`'s `xsd:schema` in `bdf87e`): XSOM
+  fails with "undefined element declaration". Declare the component in a stub of our own under the root `src/stubs/`
+  (`.xml`, as no `.xsd` is committed; `stubs.directory`), add it to the module's `jaxb-maven-plugin` `<schemas>`, and
+  don't map its namespace (`map="false"`); modules importing that schema need the stub too (`bd5c8e`).
 - XJC fails with an NPE (`CElement.getElementName()` is null) when mixed content references an element whose class
   comes from another module (episode, `<jaxb:class ref>` or `map="false"` alike). Bind those references with
   `<jaxb:dom/>` and the foreign namespace with `<jaxb:schemaBindings map="false"/>` (see `b0fd0e`).

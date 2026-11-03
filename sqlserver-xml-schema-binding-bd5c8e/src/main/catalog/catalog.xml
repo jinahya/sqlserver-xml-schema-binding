@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- resolves the schemaLocation-less imports of http://schemas.microsoft.com/sqlserver/2004/SOAP/types{,/SqlMessage,
+     /SqlRowCount,/SqlTransaction} -->
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <public publicId="http://schemas.microsoft.com/sqlserver/2004/SOAP/types"
+    uri="../../../../schemas/sqlserver/2004/SOAP/types/SqlSoapTypes.xsd"/>
+  <public publicId="http://schemas.microsoft.com/sqlserver/2004/SOAP/types/SqlMessage"
+    uri="../../../../schemas/sqlserver/2004/SOAP/types/SqlMessage/SqlMessage.xsd"/>
+  <public publicId="http://schemas.microsoft.com/sqlserver/2004/SOAP/types/SqlRowCount"
+    uri="../../../../schemas/sqlserver/2004/SOAP/types/SqlRowCount/SqlRowCount.xsd"/>
+  <public publicId="http://schemas.microsoft.com/sqlserver/2004/SOAP/types/SqlTransaction"
+    uri="../../../../schemas/sqlserver/2004/SOAP/types/SqlTransaction/SqlTransaction.xsd"/>
+</catalog>

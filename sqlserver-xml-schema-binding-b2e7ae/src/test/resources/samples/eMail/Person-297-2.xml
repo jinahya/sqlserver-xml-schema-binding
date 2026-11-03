@@ -1,0 +1,1 @@
+<p1:eMail xmlns:p1="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ContactTypes"><p1:eMailAddress>Customer4@contoso.com</p1:eMailAddress><p1:SpecialInstructions>This is secondary email address.</p1:SpecialInstructions></p1:eMail>

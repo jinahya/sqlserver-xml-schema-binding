@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- declares only the xsd:schema element (its content as anyType), for the xsd:schema reference of SqlRowSet, which
+     http://schemas.microsoft.com/sqlserver/2004/SOAP/types (SqlSoapTypes.xsd) makes without importing the XML Schema
+     namespace. Read by XJC as a second schema in the modules binding that namespace (bdf87e) or importing it (bd5c8e),
+     whose .xjb neither maps the namespace nor the reference to a class. Named .xml, not .xsd, since no .xsd is
+     committed (see .github/workflows/build.yml) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="qualified">
+  <xsd:element name="schema"/>
+</xsd:schema>

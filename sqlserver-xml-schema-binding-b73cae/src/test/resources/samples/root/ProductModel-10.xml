@@ -1,0 +1,47 @@
+<root xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ProductModelManuInstructions">
+                Adventure Works CyclesFR-200A Instructions for Manufacturing LL Touring Frame Summary: This document contains manufacturing instructions for manufacturing the LL Touring Frame, Product Model 10. Instructions are work center specific and are identified by work center ID. These instructions must be followed in the order presented. Deviation from the instructions is not permitted unless an authorized Change Order detailing the deviation is provided by the Engineering Manager.<Location LaborHours="2" LotSize="100" MachineHours="2" SetupHours="0.1" LocationID="10">
+                    Work Center 10 - Frame Forming. The following instructions pertain to Work Center 10. (Setup hours = .10, Labor Hours = 2, Machine Hours = 2, Lot Sizing = 100)<step>
+                        Insert <material>aluminum sheet MS-6061</material> into tool <tool>T-99 framing tool</tool>.
+                    </step><step>
+                        Attach <tool>Trim Jig TJ-25</tool> to the upper and lower right corners of the aluminum sheet.
+                    </step><step>
+                        Using a <tool>router with a carbide tip 26</tool>, route the aluminum sheet following the jig carefully.
+                    </step><step>
+                        Insert the frame into <tool>Forming Tool FT-25</tool> and press Start.
+                    </step><step>
+                        When finished, inspect the form for defects per <specs>Inspection Specification INFS-110</specs>.
+                    </step><step>Remove the frame from the tool and place it in the Completed or Rejected bin as appropriate.</step></Location><Location LaborHours="1.5" LotSize="1" MachineHours="1.75" SetupHours="0.25" LocationID="20">
+                    Work Center 20 - Frame Welding. The following instructions pertain to Work Center 20. (Setup hours = .25, Labor Hours = 1.5, Machine Hours = 1.75, Lot Sizing = 1)<step>
+                        Assemble all frame components following blueprint <blueprint>12345</blueprint>.
+                    </step><step>
+                        Weld all frame components together as shown in illustration <diag>3</diag></step><step>
+                        Inspect all weld joints per Adventure Works Cycles Inspection Specification <specs>INFS-206</specs>.
+                    </step></Location><Location LaborHours="1" LotSize="1" LocationID="30">
+                    Work Center 30 - Debur and Polish. The following instructions pertain to Work Center 30. (Setup hours = 0, Labor Hours = 1, Machine Hours = 0, Lot Sizing = 1)<step>
+                        Using the <tool>standard debur tool</tool>, remove all excess material from weld areas.
+                    </step><step>
+                        Using <material>Acme Polish Cream</material>, polish all weld areas.
+                    </step></Location><Location LaborHours="1.5" LotSize="20" LocationID="4">
+                    Work Center 40 - Paint. The following instructions pertain to Work Center 40. (Setup hours = 0, Labor Hours = 1.5, Machine Hours = 0, Lot Sizing = 20)<step>
+                        Attach a <material>maximum of 20 frames</material> to paint harness ensuring frames are not touching.
+                    </step><step>
+                        Mix <material>primer PA-345</material>. Test spray pattern on sample area and correct flow and pattern as required per engineering spec <specs>AWC-502</specs>.
+                    </step><step>Apply thin coat of primer to all surfaces.  </step><step>
+                        After 30 minutes, touch test for dryness. If dry to touch, lightly sand all surfaces. Remove all surface debris with <material>compressed air</material>.
+                    </step><step>
+                        Mix <material>paint</material> per manufacturer instructions.
+                    </step><step>
+                        Test spray pattern on sample area and correct flow and pattern as required per engineering specification<specs>AWC-503</specs>.
+                    </step><step>Apply thin coat of paint to all surfaces. </step><step>After 60 minutes, touch test for dryness. If dry to touch, reapply second coat. </step><step>
+                        Allow paint to cure for 24 hours and inspect per <specs>AWC-5010</specs>.
+                    </step></Location><Location LaborHours="3" LotSize="1" SetupHours="0.25" LocationID="50">
+                    Work Center 50 - SubAssembly. The following instructions pertain to Work Center 50. (Setup hours = .25, Labor Hours = 3, Machine Hours = 0, Lot Sizing = 1)<step>
+                        Add <material>Seat Assembly</material>.
+                    </step><step>
+                        Add <material>Brake assembly</material>.
+                    </step><step>
+                        Add <material>Wheel Assembly</material>.
+                    </step><step>Inspect Front Derailleur. </step><step>Inspect Rear Derailleur.</step></Location><Location LaborHours="4" LotSize="1" LocationID="60">
+                    Work Center 60 - Final Assembly. The following instructions pertain to Work Center 60. (Setup hours = 0, Labor Hours = 4, Machine Hours = 0, Lot Sizing = 1)<step>
+                        Perform final inspection per engineering specification <specs>AWC-910</specs>.
+                    </step><step>Complete all required certification forms.</step><step>Move to shipping.</step></Location></root>

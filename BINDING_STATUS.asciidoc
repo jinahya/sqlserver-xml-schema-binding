@@ -7,6 +7,7 @@ Namespaces are relative to `http://schemas.microsoft.com/sqlserver/`.
 
 Schemas are not redistributable (Microsoft copyright, no license grant), so none is committed or packaged;
 `mvn -N antrun:run@download-schemas` downloads them into the root `schemas/` (git-ignored) and verifies their SHA-256 (listed in `schemas/schemas.sha256`).
+Files now served as all zero bytes are downloaded from a pinned Wayback Machine snapshot of the original instead (listed in `schemas/schemas.wayback`); each snapshot has the size of the served file.
 The 2005/2008/2010 RDL schemas could be redistributed under the [MS-RDL] Open Specifications notice, but use the same mechanism for consistency.
 
 == Naming
@@ -63,8 +64,12 @@ printf '%s' "http://schemas.microsoft.com/sqlserver/2004/07/showplan" | shasum -
 
 | `2004/07/adventure-works/ProductModelManuInstructions`
 | AdventureWorks Manufacturing Instructions Document
-| | | `skip`
-| Served file (`ProductModelManuInstructions.xsd`) is all zero bytes (3626 bytes, checked over HTTP and HTTPS); `targetNamespace` cannot be determined.
+| `sqlserver-xml-schema-binding-b73cae` |  | `done`
+| Served file (`ProductModelManuInstructions.xsd`) is all zero bytes (3626 bytes); downloaded from the
+https://web.archive.org/web/20081223171953id_/http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ProductModelManuInstructions/ProductModelManuInstructions.xsd[Wayback Machine snapshot of 2008-12-23].
+The same schema (but whitespace) is the `[Production].[ManuInstructionsSchemaCollection]` of the AdventureWorks install script
+https://github.com/microsoft/sql-server-samples/blob/1346b94fab23bfa7edfdb32afae52282ddc3bfaa/samples/databases/adventure-works/oltp-install-script/instawdb.sql#L837-L882[`instawdb.sql`]
+(lines 837-882). Checked against the 9 non-null `AdventureWorks` `Production.ProductModel.Instructions` rows (all test fixtures).
 
 | `2004/07/adventure-works/ProductModelWarrAndMain`
 | AdventureWorks Product Warranty and Maintenance Information
@@ -115,8 +120,11 @@ Tested with a single trivial `SELECT 1` plan only.
 
 | `2004/SOAP/types`
 | SQL SOAP Types
-| | | `skip`
-| Served file (`SqlSoapTypes.xsd`) is all zero bytes (2354 bytes, checked over HTTP and HTTPS); `targetNamespace` cannot be determined.
+| `sqlserver-xml-schema-binding-bdf87e` |  | `wip`
+| Served file (`SqlSoapTypes.xsd`) is all zero bytes (2354 bytes); downloaded from the
+https://web.archive.org/web/20051021234418id_/http://schemas.microsoft.com/sqlserver/2004/SOAP/types/SqlSoapTypes.xsd[Wayback Machine snapshot of 2005-10-21].
+`SqlRowSet` references `xsd:schema` without importing the XML Schema namespace; the root `src/stubs/xml-schema.xml`
+declares it for XJC, and the reference is bound as a DOM element.
 
 | `2004/SOAP/types/SqlMessage`
 | SQL SOAP Types SqlMessage
@@ -129,8 +137,10 @@ Tested with a single trivial `SELECT 1` plan only.
 
 | `2004/SOAP/types/SqlResultStream`
 | SQL SOAP Types SqlResultStream
-|  |  | `skip`
-| Imports `2004/SOAP/types` and `2004/SOAP/types/SqlTransaction`, whose schemas are served as all zero bytes.
+| `sqlserver-xml-schema-binding-bd5c8e` |  | `wip`
+| Imports `2004/SOAP/types`, `2004/SOAP/types/SqlMessage`, `2004/SOAP/types/SqlRowCount` and
+`2004/SOAP/types/SqlTransaction`; resolved via `src/main/catalog/catalog.xml` and reuses their modules through their
+episodes (with the root `src/stubs/xml-schema.xml`, as `sqlserver-xml-schema-binding-bdf87e`).
 
 | `2004/SOAP/types/SqlRowCount`
 | SQL SOAP Types SqlRowCount
@@ -138,8 +148,9 @@ Tested with a single trivial `SELECT 1` plan only.
 
 | `2004/SOAP/types/SqlTransaction`
 | SQL SOAP Types SqlTransaction
-| | | `skip`
-| Served file (`SqlTransaction.xsd`) is all zero bytes (2430 bytes, checked over HTTP and HTTPS); `targetNamespace` cannot be determined.
+| `sqlserver-xml-schema-binding-bfe22e` |  | `wip`
+| Served file (`SqlTransaction.xsd`) is all zero bytes (2430 bytes); downloaded from the
+https://web.archive.org/web/20051021234641id_/http://schemas.microsoft.com/sqlserver/2004/SOAP/types/SqlTransaction/SqlTransaction.xsd[Wayback Machine snapshot of 2005-10-21].
 
 6+h| 2006 -- 2012
 
@@ -170,13 +181,17 @@ writes them). `EVENT_INSTANCE` is untyped; `EventInstances` unmarshals it into t
 
 | `2008/07/IntegrationServices/Extensions`
 | Identifier Mappings for Integration Services Extensions
-| | | `skip`
-| Served file (`Extensions.xsd`) is all zero bytes (3004 bytes, checked over HTTP and HTTPS); `targetNamespace` cannot be determined.
+| `sqlserver-xml-schema-binding-b014de` |  | `wip`
+| Actual `targetNamespace` is `http://www.microsoft.com/SqlServer/Dts/Extensions.xsd`. Served file (`Extensions.xsd`) is
+all zero bytes (3004 bytes); downloaded from the
+https://web.archive.org/web/20150802211839id_/http://schemas.microsoft.com/sqlserver/2008/07/IntegrationServices/Extensions/Extensions.xsd[Wayback Machine snapshot of 2015-08-02].
 
 | `2008/07/IntegrationServices/UpgradeMapping`
 | Upgrade Mapping for Integration Services Custom Components
-| | | `skip`
-| Served file (`UpgradeMapping.xsd`) is all zero bytes (2362 bytes, checked over HTTP and HTTPS); `targetNamespace` cannot be determined.
+| `sqlserver-xml-schema-binding-b985de` |  | `wip`
+| Actual `targetNamespace` is `http://www.microsoft.com/SqlServer/Dts/UpgradeMapping.xsd`. Served file
+(`UpgradeMapping.xsd`) is all zero bytes (2362 bytes); downloaded from the
+https://web.archive.org/web/20081223142403id_/http://schemas.microsoft.com/sqlserver/2008/07/IntegrationServices/UpgradeMapping/UpgradeMapping.xsd[Wayback Machine snapshot of 2008-12-23].
 
 | `2008/10/servicebroker/externalactivator`
 | SQL Server Service Broker External Activator Configuration File
@@ -250,9 +265,9 @@ DataSet schema; `underscoreBinding="asCharInWord"` keeps table (`BpaBestpractice
 [cols="1,1",options="header"]
 |===
 | Status | Count
-| `done` | 2
-| `wip`  | 28
+| `done` | 4
+| `wip`  | 34
 | `todo` | 0
-| `skip` | 11
+| `skip` | 3
 | *Total* | *41*
 |===

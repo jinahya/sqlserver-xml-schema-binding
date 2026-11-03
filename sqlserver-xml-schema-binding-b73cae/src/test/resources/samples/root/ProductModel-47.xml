@@ -1,0 +1,30 @@
+<root xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ProductModelManuInstructions">
+                Adventure Works CyclesWA-190A Instructions for Manufacturing and Assembling the LL Touring Handlebars Summary: This document contains manufacturing instructions for manufacturing and assembling the LL Touring Handlebars, Product Model 47. Instructions are work center specific and are identified by work center ID. These instructions must be followed in the order presented. Deviation from the instructions is not permitted unless an authorized Change Order detailing the deviation is provided by the Engineering Manager.<Location LaborHours="1" LotSize="100" MachineHours="2" SetupHours="0.1" LocationID="10">
+                    Work Center 10 - Frame Forming. The following instructions pertain to Work Center 10. (Setup hours = .10, Labor Hours = 1, Machine Hours = 2, Lot Sizing = 100)<step>
+                        Insert <material>aluminum sheet MS-2259</material> into tool <tool>T-50 Tube Forming tool</tool>.
+                    </step><step>
+                        Attach <tool>Trim Jig TJ-8</tool> to the upper and lower right corners of the aluminum sheet.
+                    </step><step>Route the aluminum sheet following the jig carefully. </step><step>
+                        Insert the cut pieces into <tool>Tube Forming Tool FT-90</tool> and press Start.
+                    </step><step>
+                        When finished, inspect the form for defects per Inspection Specification <specs>INFS-90</specs>.
+                    </step><step>Remove the lengths of tube from the tool and place it in the Completed or Rejected bin as appropriate.</step></Location><Location LaborHours="1" LotSize="1" MachineHours="1.75" SetupHours="0.25" LocationID="20">
+                    Work Center 20 - Frame Welding. The following instructions pertain to Work Center 20. (Setup hours = .25, Labor Hours = 1.0, Machine Hours = 1.75, Lot Sizing = 1)<step>
+                        Assemble all <material>handlebar components</material> following blueprint <blueprint>1111</blueprint>.
+                    </step><step>
+                        Weld all components together as shown in illustration <diag>5</diag></step><step>
+                        Inspect all weld joints per Adventure Works Cycles Inspection Specification <specs>INFS-222</specs>.
+                    </step></Location><Location LaborHours="3.5" LotSize="1" LocationID="50">
+                    Work Center - 50 Frame Forming. The following instructions pertain to Work Center 10. (Setup hours = .0, Labor Hours = 3.5, Machine Hours = 0, Lot Sizing = 1)<step>
+                        Slide the <material>stem</material> onto the <material>handlebar</material> centering it over the knurled section.
+                    </step><step>Take care not to scratch the handlebar.</step><step>The ends of the handlebar should turn toward the rear. </step><step>
+                        Attach the <material>Pinch Bolt (Product Number PB-6109)</material>, <material>Lock Washer 10 (Product Number LW-1210)</material>, and <material>Lock Nut 7 (Product Number LN-1224)</material> onto the stem.
+                    </step><step>Tighten the nut just enough to keep the handlebar from rotating in the stem. Do not over tighten. </step><step>
+                        Put a <material>Flat Washer 1 (Product Number FW-1000)</material> onto the stem bolt, and then insert the bolt down into the stem.
+                    </step><step>
+                        Thread the plug nut onto the stem bolt aligning it with the stem body as shown in illustration <diag>4</diag>. Insert the stem down into the lock nut until the minimum insertion line marked on the stem is hidden inside the nut.
+                    </step><step>
+                        Attach the <material>grips</material>.
+                    </step><step>
+                        Inspect per specification <specs>FI-225</specs>.
+                    </step></Location></root>

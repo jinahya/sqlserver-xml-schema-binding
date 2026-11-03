@@ -1,0 +1,13 @@
+<root xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ProductModelManuInstructions">
+                Adventure Works CyclesWA-151C Instructions for Assembling Touring Rear Wheel Summary: This document contains manufacturing instructions for assembling the Touring Rear Wheel, Product Model 44. Instructions are work center specific and are identified by work center ID. These instructions must be followed in the order presented. Deviation from the instructions is not permitted unless an authorized Change Order detailing the deviation is provided by the Engineering Manager.<Location LaborHours="3" LotSize="1" LocationID="50">
+                    Work Center - 50 Frame Forming. The following instructions pertain to Work Center 10. (Setup hours = .0, Labor Hours = 3, Machine Hours = 0, Lot Sizing = 1)<step>
+                        Inspect the <material>rim</material> for dents, cracks or other damage.
+                    </step><step>
+                        Slide each <material>spoke</material> through the <material>hub flange</material> working in a clockwise direction.
+                    </step><step>
+                        For each spoke, screw on the <material>spoke nipple (NI-9525)</material>. Do not over tighten.
+                    </step><step>
+                        Place the wheel in the <tool>truing stand</tool>.
+                    </step><step>Pluck each spoke. The sound from each spoke should be consistent. Adjust as needed.</step><step>Inflate the tire tube to one-quarter pressure.</step><step>
+                        Insert the <material>valve stem</material> through <material>Rim RM-M825</material>.
+                    </step><step>Tuck the tube into the tire ensuring there are no wrinkles or kinks.</step><step>Inflate the tube to half pressure. </step><step>Spin the wheel and ensure the bead line is just above the rim.</step><step>Inflate the tube to 35 PSI.</step></Location></root>

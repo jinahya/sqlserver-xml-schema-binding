@@ -29,6 +29,8 @@
     <module>sqlserver-xml-schema-binding-b9c1be</module>
     <!-- http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ProductModelDescription -->
     <module>sqlserver-xml-schema-binding-b0fd0e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ProductModelManuInstructions -->
+    <module>sqlserver-xml-schema-binding-b73cae</module>
     <!-- http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/ProductModelWarrAndMain -->
     <module>sqlserver-xml-schema-binding-b4347e</module>
     <!-- http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/Resume -->
@@ -43,12 +45,18 @@
     <module>sqlserver-xml-schema-binding-ba1b3e</module>
     <!-- http://schemas.microsoft.com/sqlserver/2004/SOAP/Options -->
     <module>sqlserver-xml-schema-binding-bf91ee</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/SOAP/types -->
+    <module>sqlserver-xml-schema-binding-bdf87e</module>
     <!-- http://schemas.microsoft.com/sqlserver/2004/SOAP/types/SqlMessage -->
     <module>sqlserver-xml-schema-binding-b8bc1e</module>
     <!-- http://schemas.microsoft.com/sqlserver/2004/SOAP/types/SqlParameter -->
     <module>sqlserver-xml-schema-binding-b2898e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/SOAP/types/SqlResultStream -->
+    <module>sqlserver-xml-schema-binding-bd5c8e</module>
     <!-- http://schemas.microsoft.com/sqlserver/2004/SOAP/types/SqlRowCount -->
     <module>sqlserver-xml-schema-binding-b3f54e</module>
+    <!-- http://schemas.microsoft.com/sqlserver/2004/SOAP/types/SqlTransaction -->
+    <module>sqlserver-xml-schema-binding-bfe22e</module>
     <!-- http://schemas.microsoft.com/sqlserver/2004/bulkload/format -->
     <module>sqlserver-xml-schema-binding-bc42fe</module>
     <!-- http://schemas.microsoft.com/sqlserver/2004/sqltypes -->
@@ -81,6 +89,10 @@
     <module>sqlserver-xml-schema-binding-b1464e</module>
     <!-- http://www.microsoft.com/SqlServer/Dts/DtwTypeConversion.xsd -->
     <module>sqlserver-xml-schema-binding-b8e89e</module>
+    <!-- http://www.microsoft.com/SqlServer/Dts/Extensions.xsd -->
+    <module>sqlserver-xml-schema-binding-b014de</module>
+    <!-- http://www.microsoft.com/SqlServer/Dts/UpgradeMapping.xsd -->
+    <module>sqlserver-xml-schema-binding-b985de</module>
     <!-- http://www.opengis.net/gml -->
     <module>sqlserver-xml-schema-binding-bfdede</module>
   </modules>
@@ -111,6 +123,9 @@
     <schemas.directory>${project.basedir}/../schemas</schemas.directory>
     <!-- sources generated into each module's package (@module.name@ replaced), e.g. the equals/hashCode strategies -->
     <templates.directory>${project.basedir}/../src/templates</templates.directory>
+    <!-- schemas of our own (not Microsoft's, so committed; named .xml, as no .xsd is) that XJC reads next to a module's
+         schema, e.g. xml-schema.xml -->
+    <stubs.directory>${project.basedir}/../src/stubs</stubs.directory>
   </properties>
 
   <dependencyManagement>
@@ -341,7 +356,9 @@
       <plugin><!-- mvn -N antrun:run@download-schemas
              downloads https://schemas.microsoft.com/{path} to schemas/{path} for each "sha256  path" line of
              schemas/schemas.sha256 (shasum format), unless already there, and verifies that each is byte-for-byte the
-             expected file; run manually, or with -Pdownload-schemas (see the profile below), as release:perform does -->
+             expected file; run manually, or with -Pdownload-schemas (see the profile below), as release:perform does.
+             A path also listed in schemas/schemas.wayback ("timestamp  path", for files now served as all zero bytes)
+             is downloaded from that Wayback Machine snapshot of http://schemas.microsoft.com/{path} instead -->
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-antrun-plugin</artifactId>
         <inherited>false</inherited>
@@ -369,15 +386,28 @@
                 <concat destfile="${project.build.directory}/download-schemas.xml">
                   <header filtering="no" trimleading="yes"><![CDATA[
                     <project name="download-schemas" default="download">
+                      <loadproperties srcfile="${schemas}/schemas.wayback">
+                        <filterchain>
+                          <linecontainsregexp>
+                            <regexp pattern="^[0-9]{14}\s+\S+$"/>
+                          </linecontainsregexp>
+                          <replaceregex pattern="^([0-9]{14})\s+(\S+)$" replace="wayback.\2=\1"/>
+                        </filterchain>
+                      </loadproperties>
                       <macrodef name="schema">
                         <attribute name="path"/>
                         <attribute name="sha256"/>
                         <sequential>
                           <local name="dir"/>
+                          <local name="src"/>
                           <local name="ok"/>
                           <dirname property="dir" file="${schemas}/@{path}"/>
                           <mkdir dir="${dir}"/>
-                          <get src="https://schemas.microsoft.com/@{path}" dest="${schemas}/@{path}" skipexisting="true"/>
+                          <condition property="src" else="https://schemas.microsoft.com/@{path}"
+                                     value="https://web.archive.org/web/${wayback.@{path}}id_/http://schemas.microsoft.com/@{path}">
+                            <isset property="wayback.@{path}"/>
+                          </condition>
+                          <get src="${src}" dest="${schemas}/@{path}" skipexisting="true"/>
                           <checksum file="${schemas}/@{path}" algorithm="SHA-256" property="@{sha256}" verifyproperty="ok"/>
                           <fail message="unexpected SHA-256 of schemas/@{path}">
                             <condition>
