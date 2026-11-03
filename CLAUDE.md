@@ -156,4 +156,4 @@ printf '%s' "http://schemas.microsoft.com/sqlserver/2004/07/showplan" | shasum -
 ## Repository
 
 - GitHub: `git@github.com:jinahya/sqlserver-xml-schema-binding.git` (`main`, `develop`); POM `<url>`/`<scm>` match.
-- Commit or push only when asked; ask which branch.
+- Commit or push only when asked; commit on the current branch.
