@@ -10,7 +10,7 @@
 
   <groupId>io.github.jinahya</groupId>
   <artifactId>sqlserver-xml-schema-binding</artifactId>
-  <version>0.0.5-SNAPSHOT</version>
+  <version>0.0.5</version>
   <packaging>pom</packaging>
 
   <name>${project.artifactId}</name>
@@ -102,7 +102,7 @@
     <connection>scm:git:git@github.com:jinahya/sqlserver-xml-schema-binding.git</connection>
     <developerConnection>scm:git:git@github.com:jinahya/sqlserver-xml-schema-binding.git</developerConnection>
     <url>https://github.com/jinahya/sqlserver-xml-schema-binding</url>
-    <tag>HEAD</tag>
+    <tag>0.0.5</tag>
   </scm>
 
   <properties>
@@ -403,8 +403,7 @@
                           <local name="ok"/>
                           <dirname property="dir" file="${schemas}/@{path}"/>
                           <mkdir dir="${dir}"/>
-                          <condition property="src" else="https://schemas.microsoft.com/@{path}"
-                                     value="https://web.archive.org/web/${wayback.@{path}}id_/http://schemas.microsoft.com/@{path}">
+                          <condition property="src" else="https://schemas.microsoft.com/@{path}" value="https://web.archive.org/web/${wayback.@{path}}id_/http://schemas.microsoft.com/@{path}">
                             <isset property="wayback.@{path}"/>
                           </condition>
                           <get src="${src}" dest="${schemas}/@{path}" skipexisting="true"/>
